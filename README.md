@@ -64,25 +64,3 @@ pip install -r requirements/base.txt
     ```
     celery -A src.celery.celery beat -l debug
     ```
-
-## How to add tasks in celery
-* sample can be found on modules/module1/tasks.py
-```python
-from src.celery import celery
-
-@celery.task()
-def ping():
-    print('pong')
-```
-
-## How to handle scheduled tasks in celery
-* update CELERYBEAT_SCHEDULE found on src/conf/settings.py
-```python
-CELERYBEAT_SCHEDULE = {
-    'test-celery-sched': {
-        'task': 'src.modules.module1.tasks.ping',
-        'schedule': 10.0,
-    },
-}
-```
-

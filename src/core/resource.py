@@ -3,7 +3,7 @@ import falcon
 
 
 class BaseResource(object):
-    
+
     def __init__(self):
         self.SUCCESS = falcon.HTTP_200
         self.BAD_REQUEST = falcon.HTTP_BAD_REQUEST
@@ -20,4 +20,3 @@ class BaseResource(object):
         resp.status = code
         resp.content_type = 'application/json'
         resp.body = json.dumps(message)
-

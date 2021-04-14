@@ -1,7 +1,7 @@
-from src.modules.module1.routes import routes as module1_routes
+from src.modules.hive_db.routes import routes as hive_db_routes
 
 api_routes = [
-    module1_routes,
+    hive_db_routes,
 ]
 
 def register_routes(routes, app, prefix=None):

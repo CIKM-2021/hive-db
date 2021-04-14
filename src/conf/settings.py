@@ -15,19 +15,9 @@ ALLOWED_HOSTS = [
 #List of all modules use in the app.
 #Primarily used by celery to find all tasks.
 INSTALLED_APPS = [
-    'src.modules.module1'
+    'src.modules.hive_db'
 ]
 
-# CELERY
-CELERY_BROKER='redis://localhost:5103/0'
-CELERY_BACKEND='redis://localhost:5103/0'
-
-CELERYBEAT_SCHEDULE = {
-    'test-celery-sched': {
-        'task': 'src.modules.module1.tasks.ping',
-        'schedule': 10.0,
-    },
-}
 
 try:
     from .local_settings import *
