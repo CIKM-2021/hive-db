@@ -1,7 +1,9 @@
 from .resources import (
-    TestResourceView
+    TestResourceView,
+    AccountView
 )
 
 routes = [
     ('test', TestResourceView()),
+    ('account', AccountView())
 ]

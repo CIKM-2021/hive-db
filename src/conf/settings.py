@@ -6,7 +6,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 HOST='0.0.0.0'
 PORT=8001
 
-SECRET_KEY='secret'
+SECRET_KEY='WrrXP6szu06wlLQVfAM3b0FD8i4612zc'
 
 ALLOWED_HOSTS = [
     '*'
@@ -18,6 +18,7 @@ INSTALLED_APPS = [
     'src.modules.hive_db'
 ]
 
+GOOGLE_KEY_FILE = '.env/Steemit-e706b5b8cead.json'
 
 try:
     from .local_settings import *
