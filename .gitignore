@@ -8,3 +8,6 @@ local_settings.*
 
 *.lock
 *.db
+
+# environment
+.env
