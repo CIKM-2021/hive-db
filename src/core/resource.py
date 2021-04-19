@@ -14,9 +14,9 @@ class BaseResource(object):
     def ok(self, resp, message):
         resp.status = self.SUCCESS
         resp.content_type = 'application/json'
-        resp.body = json.dumps(message)
+        resp.text = json.dumps(message)
 
     def error(self, resp, code, message):
         resp.status = code
         resp.content_type = 'application/json'
-        resp.body = json.dumps(message)
+        resp.text = json.dumps(message)
