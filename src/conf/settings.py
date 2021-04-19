@@ -1,26 +1,20 @@
 import os
+from typing import List
+from pydantic import BaseSettings
+from google.oauth2 import service_account
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# SERVER
-HOST='0.0.0.0'
-PORT=8001
+class Settings(BaseSettings):
+    BASE_DIR: str = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    REGION: str = "asia-southeast1"
+    SERVICE: str = "hive-db"
+    VERSION: str = "v1.0.0"
+    HOST: str = "0.0.0.0"
+    PORT: int = 8001
+    PREFIX: str = f"{SERVICE}/{VERSION}"
+    GOOGLE_KEY_FILE: str = ".env/Steemit-e706b5b8cead.json"
+    HIVE_KEY: str = "WrrXP6szu06wlLQVfAM3b0FD8i4612zc"
+    ALLOWED_HOSTS: List[str] = ["*"]
 
-SECRET_KEY='WrrXP6szu06wlLQVfAM3b0FD8i4612zc'
-
-ALLOWED_HOSTS = [
-    '*'
-]
-
-#List of all modules use in the app.
-#Primarily used by celery to find all tasks.
-INSTALLED_APPS = [
-    'src.modules.hive_db'
-]
-
-GOOGLE_KEY_FILE = '.env/Steemit-e706b5b8cead.json'
-
-try:
-    from .local_settings import *
-except ImportError:
-    pass
+    class Config:
+        env_file = ".env"
