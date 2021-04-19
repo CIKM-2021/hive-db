@@ -1,6 +1,6 @@
 import falcon
 
-import src.conf as settings
+from ..conf import settings
 
 
 class APIPermission:
@@ -13,5 +13,5 @@ class APIPermission:
     def process_request(self, req, resp):
         token = req.headers.get('TOKEN', None)
 
-        if token != settings.SECRET_KEY:
+        if token != settings.HIVE_KEY:
             raise falcon.HTTPUnauthorized()
