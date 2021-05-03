@@ -1,5 +1,5 @@
 from enum import Enum
 
 
-class AccountField(Enum):
-    pass
+ACCOUNT_FIELDS = []
+POST_TABLE_FIELD = []
