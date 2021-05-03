@@ -1,10 +1,9 @@
 import falcon
 import json
 from google.cloud import bigquery
-from google.oauth2 import service_account
 
-from src.core.resource import BaseResource
-from src.conf import settings
+from ...core.resource import BaseResource
+from ...conf import settings
 
 credentials = service_account.Credentials.from_service_account_file(
     settings.GOOGLE_KEY_FILE, scopes=["https://www.googleapis.com/auth/cloud-platform"],
@@ -19,7 +18,7 @@ class TestResourceView(BaseResource):
 class AccountView(BaseResource):
 
     def on_get(self, req, resp):
-        client = bigquery.Client(credentials=credentials, project=credentials.project_id)
+        client = bigquery.Client(credentials=settings.CREDENTIALS, project=settings.CREDENTIALS.project_id)
         sql = """
             WITH data AS (
             SELECT
