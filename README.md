@@ -1,66 +1,59 @@
-# python-falcon-template
-A sample template for Python Falcon API application. This also provides a sample on how to implement celery in Falcon.
+# HIVE Data service
 
 ## Install
 ```
-pip install -r requirements/base.txt
+docker pull nguyenminh1807/hive-db:v1.0
 ```
 
-## Folders
-* requirements
-    - includes all dependencies for the project
-    * base.txt
-        - main requirements file
-    * dev.txt
-        - all your dev requirements
-* conf
-    - includes the settings file
-    - add local_settings.py in conf folder to override any value in settings file
-* middleware
-    - includes all middleware files
-* core
-    - includes all necessary files used in the app
-    * resource.py
-        - includes base resource class
-    * routes.py
-        - includes main function to register routes
-        - file to add all your routes
-    * test.py
-        - includes base test class
-* modules
-    - includes all modules in your app
-    - per module folder, test folder should be included
-* app.py
-    - includes create_app function
-    - is where you define your middlewares and other settings
-* celery.py
-    - includes celery declaration
-* runserver.sh
-    - script to quickly run server
-* runtest.sh
-    - script to quickly run tests
-
-## How to run server
-* make sure runserver.sh is executable
+## Run local
 ```
-./runserver.sh
+docker run -it --rm -p 5000:5000 nguyenminh18078/hive-db:v1.0
 ```
 
-## How to run tests
-* make sure runtest.sh is executable
+## Examples
+
+### Block APIs
+
+
+GET: number of block (default 25)
 ```
-./runtest.sh
+http GET localhost:8000/hive-db/v1.0.0/blocks\?size\=3 TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
 ```
 
-# Celery
+GET: return specific fields
+```
+http GET localhost:8000/hive-db/v1.0.0/blocks\?size\=3\&fields\=signing\_key\,transaction\_ids\,id\,block\_id\,witness TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
+```
 
-## How to run celery
-* we are using redis as our celery broker, so make sure to install redis-server
-* run redis-server and update CELERY settings found on src/conf/settings.py
-* how to run celery:
-    ```
-    celery -A src.celery.celery worker --loglevel=info
-    ```
-    ```
-    celery -A src.celery.celery beat -l debug
-    ```
+GET: blocks by witnesses
+```
+http GET localhost:8000/hive-db/v1.0.0/blocks\?size\=5\&fields\=signing\_key\,transaction\_ids\,id\,block\_id\,witness\&witnesses\=ausbitbank\,pharesim\,anyx TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
+```
+
+GET: blocks by ids
+```
+http GET localhost:8000/hive-db/v1.0.0/blocks\?size\=3\&fields\=signing\_key\,transaction\_ids\,id\,block\_id\,witness\&ids=51314015,51314016 TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
+```
+
+GET: blocks by block_ids
+```
+http GET localhost:8000/hive-db/v1.0.0/blocks\?size\=3\&fields\=signing\_key\,transaction\_ids\,id\,block\_id\,witness\&block_ids=030efd5fe57e5fa7104b1186d7df6f00b39d3777,030efd60d0fbf6cca241f8be3577d3f680819c75 TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
+```
+
+
+**GET block by time can use both of UTC format and timestamp.**
+
+GET: block since begin_time to end_time
+```
+http GET localhost:8000/hive-db/v1.0.0/blocks\?size\=3\&fields\=signing\_key\,transaction\_ids\,id\,block\_id\,witness\&before\=2021-02-14T04:40:15\&after\=2021-02-14T04:40:12 TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
+```
+
+GET: blocks after a specific date
+```
+http GET localhost:8000/hive-db/v1.0.0/blocks\?size\=3\&fields\=signing\_key\,transaction\_ids\,id\,block\_id\,witness\&after\=2021-02-14T04:40:15 TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
+```
+
+GET: blocks before a specific date
+```
+http GET localhost:8000/hive-db/v1.0.0/blocks\?size\=3\&fields\=signing\_key\,transaction\_ids\,id\,block\_id\,witness\&before\=1620171391 TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
+```
