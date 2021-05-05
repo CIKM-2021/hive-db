@@ -1,38 +1,38 @@
 import falcon
 from falcon_cors import CORS
 from logbook import Logger
-from apispec import APISpec
-from apispec.ext.marshmallow import MarshmallowPlugin
-from falcon_apispec import FalconPlugin
-from marshmallow import Schema, fields
+# from apispec import APISpec
+# from apispec.ext.marshmallow import MarshmallowPlugin
+# from falcon_apispec import FalconPlugin
+# from marshmallow import Schema, fields
 
 from .middleware.permissions import APIPermission
 from .conf import settings
 from .hive_db.views.accounts import TestResourceView, AccountView
-
+from .hive_db.views.blocks import BlockView
 
 logger = Logger(__name__)
 
 
-class TestSchema(Schema):
-    q = fields.Str()
+# class TestSchema(Schema):
+#     q = fields.Str()
 
-class Accountchema(Schema):
-    author = fields.Str()
-    body = fields.Str()
-    url = fields.Str()
-    permlink = fields.Str()
-    post_id = fields.Str()
+# class Accountchema(Schema):
+#     author = fields.Str()
+#     body = fields.Str()
+#     url = fields.Str()
+#     permlink = fields.Str()
+#     post_id = fields.Str()
 
 
 def create_app():
     cors = CORS(allow_origins_list=settings.ALLOWED_HOSTS)
     middlewares = [cors.middleware, APIPermission()]
-    app = falcon.App(middleware=middlewares)
-    test_resource = TestResourceView()
-    account_resource = AccountView()
-    app.add_route(f"/{settings.PREFIX}/test", test_resource)
-    app.add_route(f"/{settings.PREFIX}/accounts", account_resource)
+    app = falcon.API(middleware=middlewares)
+    app.add_route(f"/{settings.PREFIX}/test", TestResourceView())
+    app.add_route(f"/{settings.PREFIX}/accounts", AccountView())
+    app.add_route(f"/{settings.PREFIX}/blocks", BlockView())
+
     # Create an APISpec
     # spec = APISpec(
     #     title='Swagger Petstore',
