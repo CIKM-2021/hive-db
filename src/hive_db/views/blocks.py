@@ -111,7 +111,7 @@ class BlockView(BaseResource):
             query_template = """
                 SELECT @columns, TO_JSON_STRING(blocks)
                 FROM `steemit-307308`.hive.block_01 AS blocks
-                WHERE timestamp >= @after AND timestamp <= @before 
+                WHERE timestamp >= @after AND timestamp <= @before
                 LIMIT @limit
             """
             job_config = bigquery.QueryJobConfig(
@@ -169,5 +169,5 @@ class BlockView(BaseResource):
 
         print(query_job.to_dataframe())
         df_results = query_job.to_dataframe()['f1_']
-        json_results = ujson.loads(df_results.to_json())
+        json_results = ujson.loads(df_results.to_json(orient='records'))
         self.ok(resp, json_results)

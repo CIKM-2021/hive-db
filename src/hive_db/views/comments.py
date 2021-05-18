@@ -22,7 +22,7 @@ class CommentView(BaseResource):
     def on_get(self, req, resp):
         # init client
         credentials = get_credentials()
-        client = bigquery.Client(credentials=credentials, project=credentials.project_id)   
+        client = bigquery.Client(credentials=credentials, project=credentials.project_id)
         # get params
         table = req.get_param('table')
         size = req.get_param('size')
@@ -178,7 +178,7 @@ class CommentView(BaseResource):
                     UNNEST (transactions) AS transaction_unnest,
                     UNNEST (transaction_unnest.operations) AS operations_unnest
                 WHERE operations_unnest.type = 'comment_operation'
-                    AND timestamp >= @after AND timestamp <= @before 
+                    AND timestamp >= @after AND timestamp <= @before
                 LIMIT @limit
             """
             job_config = bigquery.QueryJobConfig(
@@ -210,7 +210,7 @@ class CommentView(BaseResource):
         print('table {}'.format(table))
         print('size {}'.format(size))
         print('columns {}'.format(columns))
-        print('witnesses {}'.format(witnesses)) 
+        print('witnesses {}'.format(witnesses))
         print('ids {}'.format(ids))
         print('block_ids {}'.format(block_ids))
         print('after {}'.format(after))
@@ -220,5 +220,5 @@ class CommentView(BaseResource):
         query_job = client.query(query_template, job_config=job_config)
         print(query_job.to_dataframe())
         df_results = query_job.to_dataframe()['f1_']
-        json_results = json.loads(df_results.to_json())
+        json_results = json.loads(df_results.to_json(orient='records'))
         self.ok(resp, json_results)
