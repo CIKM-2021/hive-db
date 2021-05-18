@@ -10,6 +10,7 @@ from .middleware.permissions import APIPermission
 from .conf import settings
 from .hive_db.views.accounts import TestResourceView, AccountView
 from .hive_db.views.blocks import BlockView
+from .hive_db.views.comments import CommentView
 
 logger = Logger(__name__)
 
@@ -32,7 +33,7 @@ def create_app():
     app.add_route(f"/{settings.PREFIX}/test", TestResourceView())
     app.add_route(f"/{settings.PREFIX}/accounts", AccountView())
     app.add_route(f"/{settings.PREFIX}/blocks", BlockView())
-
+    app.add_route(f"/{settings.PREFIX}/comments", CommentView())
     # Create an APISpec
     # spec = APISpec(
     #     title='Swagger Petstore',
