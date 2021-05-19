@@ -1,13 +1,10 @@
-import os
 from datetime import datetime
 
 import pytz
-import falcon
 import ujson
 import pandas as pd
 from logbook import Logger
 from google.cloud import bigquery
-from google.oauth2 import service_account
 
 # from ..queries import AccountQuery
 from ...core.resource import BaseResource

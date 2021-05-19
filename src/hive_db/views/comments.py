@@ -2,15 +2,11 @@ import os
 from datetime import datetime
 
 import pytz
-import falcon
 import ujson
-import json
 import pandas as pd
 from logbook import Logger
 from google.cloud import bigquery
-from google.oauth2 import service_account
 
-# from ..queries import AccountQuery
 from ...core.resource import BaseResource
 from ...conf import settings
 from ...conf.clients import get_credentials
@@ -220,5 +216,5 @@ class CommentView(BaseResource):
         query_job = client.query(query_template, job_config=job_config)
         print(query_job.to_dataframe())
         df_results = query_job.to_dataframe()['f1_']
-        json_results = json.loads(df_results.to_json(orient='records'))
+        json_results = ujson.loads(df_results.to_json(orient='records'))
         self.ok(resp, json_results)

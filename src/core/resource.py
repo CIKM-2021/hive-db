@@ -1,4 +1,4 @@
-import json
+import ujson
 import falcon
 
 
@@ -9,14 +9,14 @@ class BaseResource(object):
         self.BAD_REQUEST = falcon.HTTP_BAD_REQUEST
         self.INTERNAL_ERROR = falcon.HTTP_500
         self.NOT_FOUND = falcon.HTTP_404
-        self.content_type = 'application/json'
+        self.content_type = 'application/u'
 
     def ok(self, resp, message):
         resp.status = self.SUCCESS
         resp.content_type = 'application/json'
-        resp.text = json.dumps(message)
+        resp.text = ujson.dumps(message)
 
     def error(self, resp, code, message):
         resp.status = code
         resp.content_type = 'application/json'
-        resp.text = json.dumps(message)
+        resp.text = ujson.dumps(message)
