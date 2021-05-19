@@ -74,17 +74,17 @@ http GET localhost:8000/hive-db/v1.0.0/comments?size=3 TOKEN:WrrXP6szu06wlLQVfAM
 
 GET: comment by the authors
 ```
-http GET localhost:5000/hive-db/v1.0.0/comments?size=3&fields=signing_key,transaction_ids,id,block_id,witness&authors=wilhb81,pl-travelfeed TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
+http GET localhost:8000/hive-db/v1.0.0/comments?size=3&fields=signing_key,transaction_ids,id,block_id,witness&authors=wilhb81,pl-travelfeed TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
 ```
 
 GET: comments contain words
 ```
-localhost:5000/hive-db/v1.0.0/comments?size=3&fields=signing_key,transaction_ids,id,block_id,witness&search=dish,aktywnym
+http GET localhost:8000/hive-db/v1.0.0/comments?size=3&fields=signing_key,transaction_ids,id,block_id,witness&search=dish,aktywnym TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
 ```
 
 GET: comments by permlinhk
 ```
-localhost:5000/hive-db/v1.0.0/comments?size=3&fields=signing_key,transaction_ids,id,block_id,witness&permlinks=re-ptaku-qoi4z7,qoi4z2
+http GET localhost:8000/hive-db/v1.0.0/comments?size=3&fields=signing_key,transaction_ids,id,block_id,witness&permlinks=re-ptaku-qoi4z7,qoi4z2 TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
 ```
 
 **GET comments by time can use both of UTC format and timestamp.**
