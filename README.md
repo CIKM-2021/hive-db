@@ -67,7 +67,7 @@ http GET localhost:8000/hive-db/v1.0.0/blocks?size=3&fields=signing_key,transact
 
 ### Comment APIs
 
-GET: number of block (default 25)
+GET: number of comments (default 25)
 ```
 http GET localhost:8000/hive-db/v1.0.0/comments?size=3 TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
 ```
@@ -102,4 +102,43 @@ http GET localhost:8000/hive-db/v1.0.0/comments?size=3&fields=signing_key,transa
 GET: comments before a specific date
 ```
 http GET localhost:8000/hive-db/v1.0.0/comments?size=3&fields=signing_key,transaction_ids,id,block_id,witness&before=1620171391 TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
+```
+
+### Post APIs
+
+GET: number of posts (default 25)
+```
+http GET localhost:8000/hive-db/v1.0.0/posts?size=3 TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
+```
+
+GET: posts by the authors
+```
+http GET localhost:8000/hive-db/v1.0.0/posts?size=3&fields=signing_key,transaction_ids,id,block_id,witness&authors=wilhb81,pl-travelfeed TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
+```
+
+GET: posts contain words
+```
+http GET localhost:8000/hive-db/v1.0.0/posts?size=3&fields=signing_key,transaction_ids,id,block_id,witness&search=covid TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
+```
+
+GET: posts by permlinhk
+```
+http GET localhost:8000/hive-db/v1.0.0/posts?size=3&fields=signing_key,transaction_ids,id,block_id,witness&permlinks=covid-drove-us-into-digitization-and-crypto-or-freewrite-weekend-16-05-21,qoi4z2 TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
+```
+
+**GET posts by time can use both of UTC format and timestamp.**
+
+GET: posts since begin_time to end_time
+```
+http GET localhost:8000/hive-db/v1.0.0/posts?size=3&fields=signing_key,transaction_ids,id,block_id,witness&before=2021-05-24T04:40:15&after=2021-02-14T04:40:12 TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
+```
+
+GET: posts after a specific date
+```
+http GET localhost:8000/hive-db/v1.0.0/posts?size=3&fields=signing_key,transaction_ids,id,block_id,witness&after=2021-02-14T04:40:15 TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
+```
+
+GET: posts before a specific date
+```
+http GET localhost:8000/hive-db/v1.0.0/posts?size=3&fields=signing_key,transaction_ids,id,block_id,witness&before=1620171391 TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
 ```

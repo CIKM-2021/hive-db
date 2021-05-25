@@ -9,7 +9,6 @@ local_settings.*
 *.lock
 *.db
 
-# environment
 .env
-
 .vscode/
+src/results/*
