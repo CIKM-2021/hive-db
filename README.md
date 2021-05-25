@@ -72,6 +72,11 @@ GET: number of comments (default 25)
 http GET localhost:8000/hive-db/v1.0.0/comments?size=3 TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
 ```
 
+GET: comment by witnesses
+```
+http GET localhost:8000/hive-db/v1.0.0/comments?size=3&fields=signing_key,transaction_ids,id,block_id,witness&witnesses=ausbitbank,pharesim,anyx TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
+```
+
 GET: comment by the authors
 ```
 http GET localhost:8000/hive-db/v1.0.0/comments?size=3&fields=signing_key,transaction_ids,id,block_id,witness&authors=wilhb81,pl-travelfeed TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
