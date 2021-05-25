@@ -1,6 +1,6 @@
 import os
 import falcon
-import json
+import ujson
 from logbook import Logger
 from google.cloud import bigquery
 from google.oauth2 import service_account
@@ -45,7 +45,7 @@ class AccountView(BaseResource):
             ]
         )
         query_job = client.query(query, job_config=job_config)
-        json_results = json.loads(query_job.to_dataframe().to_json())
+        json_results = ujson.loads(query_job.to_dataframe().to_json())
         response = {'blog_history': []}
         if limit:
             logger.info('Filtering by limit params: {}'.format(limit))
