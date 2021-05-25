@@ -65,7 +65,7 @@ class CommentView(BaseResource):
                 FROM `steemit-307308.hive.block_01` AS blocks,
                     UNNEST (transactions) AS transaction_unnest,
                     UNNEST (transaction_unnest.operations) AS operations_unnest
-                WHERE operations_unnest.type = 'comment_operation'
+                WHERE operations_unnest.value.title = ""
                     AND witness IN UNNEST(@witnesses)
                 LIMIT @limit
             """
@@ -83,7 +83,7 @@ class CommentView(BaseResource):
                 FROM `steemit-307308.hive.block_01` AS blocks,
                     UNNEST (transactions) AS transaction_unnest,
                     UNNEST (transaction_unnest.operations) AS operations_unnest
-                WHERE operations_unnest.type = 'comment_operation'
+                WHERE operations_unnest.value.title = ""
                     AND id IN UNNEST(@ids)
                 LIMIT @limit
             """
@@ -101,7 +101,7 @@ class CommentView(BaseResource):
                 FROM `steemit-307308.hive.block_01` AS blocks,
                     UNNEST (transactions) AS transaction_unnest,
                     UNNEST (transaction_unnest.operations) AS operations_unnest
-                WHERE operations_unnest.type = 'comment_operation'
+                WHERE operations_unnest.value.title = ""
                     AND id IN UNNEST(@block_ids)
                 LIMIT @limit
             """
@@ -119,8 +119,8 @@ class CommentView(BaseResource):
                 FROM `steemit-307308.hive.block_01` AS blocks,
                     UNNEST (transactions) AS transaction_unnest,
                     UNNEST (transaction_unnest.operations) AS operations_unnest
-                WHERE (operations_unnest.type = 'comment_operation')
-                    AND (operations_unnest.value.author IN UNNEST(@authors))
+                WHERE operations_unnest.value.title = ""
+                    AND operations_unnest.value.author IN UNNEST(@authors)
                 LIMIT @limit
             """
             job_config = bigquery.QueryJobConfig(
@@ -137,8 +137,8 @@ class CommentView(BaseResource):
                 FROM `steemit-307308.hive.block_01` AS blocks,
                     UNNEST (transactions) AS transaction_unnest,
                     UNNEST (transaction_unnest.operations) AS operations_unnest
-                WHERE (operations_unnest.type = 'comment_operation')
-                    AND (operations_unnest.value.permlink IN UNNEST(@permlinks))
+                WHERE operations_unnest.value.title = ""
+                    AND operations_unnest.value.permlink IN UNNEST(@permlinks)
                 LIMIT @limit
             """
             job_config = bigquery.QueryJobConfig(
@@ -155,7 +155,7 @@ class CommentView(BaseResource):
                 FROM `steemit-307308.hive.block_01` AS blocks,
                     UNNEST (transactions) AS transaction_unnest,
                     UNNEST (transaction_unnest.operations) AS operations_unnest
-                WHERE (operations_unnest.type = 'comment_operation')
+                WHERE operations_unnest.value.title = ""
                     AND REGEXP_CONTAINS(operations_unnest.value.body, @words)
                 LIMIT @limit
             """
@@ -173,7 +173,7 @@ class CommentView(BaseResource):
                 FROM `steemit-307308.hive.block_01` AS blocks,
                     UNNEST (transactions) AS transaction_unnest,
                     UNNEST (transaction_unnest.operations) AS operations_unnest
-                WHERE operations_unnest.type = 'comment_operation'
+                WHERE operations_unnest.value.title = ""
                     AND timestamp >= @after AND timestamp <= @before
                 LIMIT @limit
             """
@@ -192,7 +192,7 @@ class CommentView(BaseResource):
                 FROM `steemit-307308.hive.block_01` AS blocks,
                     UNNEST (transactions) AS transaction_unnest,
                     UNNEST (transaction_unnest.operations) AS operations_unnest
-                WHERE operations_unnest.type = 'comment_operation'
+                WHERE operations_unnest.value.title = ""
                 LIMIT @limit
             """
             job_config = bigquery.QueryJobConfig(
