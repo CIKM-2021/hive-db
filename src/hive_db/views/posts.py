@@ -222,3 +222,30 @@ class PostView(BaseResource):
         df_results = query_job.to_dataframe()['f1_']
         json_results = ujson.loads(df_results.to_json(orient='records'))
         self.ok(resp, json_results)
+
+
+class TopPostView(BaseResource):
+    def on_get(self, req, resp):
+        # init client
+        credentials = get_credentials()
+        client = bigquery.Client(credentials=credentials, project=credentials.project_id)
+        size = 10000
+        query_template = """
+                SELECT count(operations_unnest.value.author) as amount, operations_unnest.value.author
+                FROM `steemit-307308.hive_zurich.block_data_53467816_53950539_47` AS blocks,
+                    UNNEST (transactions) AS transaction_unnest,
+                    UNNEST (transaction_unnest.operations) AS operations_unnest
+                WHERE operations_unnest.value.title != ""
+                GROUP BY operations_unnest.value.author
+                ORDER BY amount desc
+                LIMIT @limit
+            """
+        job_config = bigquery.QueryJobConfig(
+            query_parameters=[
+                bigquery.ScalarQueryParameter('limit', 'INT64', size),
+            ]
+        )
+        query_job = client.query(query_template, job_config=job_config)
+        df_results = query_job.to_dataframe()
+        json_results = ujson.loads(df_results.to_json(orient='records'))
+        self.ok(resp, json_results)
