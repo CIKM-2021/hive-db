@@ -10,7 +10,7 @@ class Settings(BaseSettings):
     SERVICE: str = "hive-db"
     VERSION: str = "v1.0.0"
     HOST: str = "0.0.0.0"
-    PORT: int = 8001
+    PORT: int = 8000
     PREFIX: str = f"{SERVICE}/{VERSION}"
     GOOGLE_KEY_FILE: str = ".env/Steemit-e706b5b8cead.json"
     HIVE_KEY: str = "WrrXP6szu06wlLQVfAM3b0FD8i4612zc"

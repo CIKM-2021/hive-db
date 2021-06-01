@@ -1,6 +1,7 @@
 import os
 from datetime import datetime
 
+import falcon
 import pytz
 import ujson
 import pandas as pd
@@ -225,6 +226,12 @@ class PostView(BaseResource):
 
 
 class TopPostView(BaseResource):
+    def on_options(self, req, res):
+        res.status = falcon.HTTP_200
+        res.set_header('Access-Control-Allow-Origin', '*')
+        res.set_header('Access-Control-Allow-Methods', 'GET')
+        res.set_header('Access-Control-Allow-Headers', 'Content-Type')
+
     def on_get(self, req, resp):
         # init client
         credentials = get_credentials()
@@ -232,7 +239,7 @@ class TopPostView(BaseResource):
         size = 10000
         query_template = """
                 SELECT count(operations_unnest.value.author) as amount, operations_unnest.value.author
-                FROM `steemit-307308.hive_zurich.block_data_53467816_53950539_47` AS blocks,
+                FROM `steemit-307308.hive_zurich.block_data_53467816_53950539_47`,
                     UNNEST (transactions) AS transaction_unnest,
                     UNNEST (transaction_unnest.operations) AS operations_unnest
                 WHERE operations_unnest.value.title != ""

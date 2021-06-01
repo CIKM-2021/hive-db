@@ -17,9 +17,9 @@ logger = Logger(__name__)
 
 
 def create_app():
-    cors = CORS(allow_origins_list=settings.ALLOWED_HOSTS)
-    middlewares = [APIPermission()]
-    app = falcon.API(middleware=cors.middleware)
+    cors = falcon.CORSMiddleware(allow_origins='*', allow_credentials='*')
+    middlewares = [cors, APIPermission()]
+    app = falcon.App(middleware=middlewares)
     app.add_route(f"/{settings.PREFIX}/test", TestResourceView())
     app.add_route(f"/{settings.PREFIX}/accounts", AccountView())
     app.add_route(f"/{settings.PREFIX}/blocks", BlockView())
