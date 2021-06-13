@@ -9,7 +9,7 @@ class BaseResource(object):
         self.BAD_REQUEST = falcon.HTTP_BAD_REQUEST
         self.INTERNAL_ERROR = falcon.HTTP_500
         self.NOT_FOUND = falcon.HTTP_404
-        self.content_type = 'application/u'
+        self.content_type = 'application/json'
 
     def ok(self, resp, message):
         resp.status = self.SUCCESS
