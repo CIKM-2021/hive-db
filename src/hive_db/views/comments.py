@@ -18,7 +18,7 @@ class CommentView(BaseResource):
     def __init__(self):
         super().__init__()
         self.dataset = 'hive_zurich'
-        self.table = 'block_data_53467816_53950539_47'
+        self.table = settings.TABLES
 
     def on_get(self, req, resp):
         # init client
@@ -31,6 +31,8 @@ class CommentView(BaseResource):
         ids = req.get_param('ids')
         block_ids = req.get_param('block_ids')
         witnesses = req.get_param('witnesses')
+        post_permlinks = req.get_param('post_permlinks')
+        tags = req.get_param('tags')
 
         before = req.get_param('before')
         after = req.get_param('after')
@@ -50,6 +52,10 @@ class CommentView(BaseResource):
             block_ids = block_ids.split(',')
         if permlinks:
             permlinks = permlinks.split(',')
+        if post_permlinks:
+            post_permlinks = permlinks.split(',')
+        if tags:
+            tags = tags.split(',')
         if before and not after:
             if before.isnumeric():
                 before = datetime.fromtimestamp(int(before), tz=pytz.UTC)
@@ -67,10 +73,12 @@ class CommentView(BaseResource):
         if witnesses:
             query_template = """
                 SELECT {columns}
-                FROM `steemit-307308`.{dataset}.{table},
+                FROM `steemit-307308.{dataset}.{table}`,
                     UNNEST (transactions) AS transaction_unnest,
                     UNNEST (transaction_unnest.operations) AS operations_unnest
-                WHERE operations_unnest.value.title = ""
+                WHERE 
+                    _TABLE_SUFFIX BETWEEN '42000000_43245905_01' AND '53950540_54433707_48'
+                    AND operations_unnest.value.title = ""
                     AND witness IN UNNEST(@witnesses)
                 LIMIT @limit
             """.format(columns=columns, dataset=self.dataset, table=self.table)
@@ -83,10 +91,12 @@ class CommentView(BaseResource):
         elif ids:
             query_template = """
                 SELECT {columns}
-                FROM `steemit-307308`.{dataset}.{table},
+                FROM `steemit-307308.{dataset}.{table}`,
                     UNNEST (transactions) AS transaction_unnest,
                     UNNEST (transaction_unnest.operations) AS operations_unnest
-                WHERE operations_unnest.value.title = ""
+                WHERE 
+                    _TABLE_SUFFIX BETWEEN '42000000_43245905_01' AND '53950540_54433707_48'
+                    AND operations_unnest.value.title = ""
                     AND id IN UNNEST(@ids)
                 LIMIT @limit
             """.format(columns=columns, dataset=self.dataset, table=self.table)
@@ -99,10 +109,12 @@ class CommentView(BaseResource):
         elif block_ids:
             query_template = """
                 SELECT {columns}
-                FROM `steemit-307308`.{dataset}.{table},
+                FROM `steemit-307308.{dataset}.{table}`,
                     UNNEST (transactions) AS transaction_unnest,
                     UNNEST (transaction_unnest.operations) AS operations_unnest
-                WHERE operations_unnest.value.title = ""
+                WHERE 
+                    _TABLE_SUFFIX BETWEEN '42000000_43245905_01' AND '53950540_54433707_48'
+                    AND operations_unnest.value.title = ""
                     AND id IN UNNEST(@block_ids)
                 LIMIT @limit
             """.format(columns=columns, dataset=self.dataset, table=self.table)
@@ -115,10 +127,12 @@ class CommentView(BaseResource):
         elif authors:
             query_template = """
                 SELECT {columns}
-                FROM `steemit-307308`.{dataset}.{table},
+                FROM `steemit-307308.{dataset}.{table}`,
                     UNNEST (transactions) AS transaction_unnest,
                     UNNEST (transaction_unnest.operations) AS operations_unnest
-                WHERE operations_unnest.value.title = ""
+                WHERE 
+                    _TABLE_SUFFIX BETWEEN '42000000_43245905_01' AND '53950540_54433707_48'
+                    AND operations_unnest.value.title = ""
                     AND operations_unnest.value.author IN UNNEST(@authors)
                 LIMIT @limit
             """.format(columns=columns, dataset=self.dataset, table=self.table)
@@ -131,10 +145,12 @@ class CommentView(BaseResource):
         elif permlinks:
             query_template = """
                 SELECT {columns}
-                FROM `steemit-307308`.{dataset}.{table},
+                FROM `steemit-307308.{dataset}.{table}`,
                     UNNEST (transactions) AS transaction_unnest,
                     UNNEST (transaction_unnest.operations) AS operations_unnest
-                WHERE operations_unnest.value.title = ""
+                WHERE 
+                    _TABLE_SUFFIX BETWEEN '42000000_43245905_01' AND '53950540_54433707_48'
+                    AND operations_unnest.value.title = ""
                     AND operations_unnest.value.permlink IN UNNEST(@permlinks)
                 LIMIT @limit
             """.format(columns=columns, dataset=self.dataset, table=self.table)
@@ -147,10 +163,12 @@ class CommentView(BaseResource):
         elif search:
             query_template = """
                 SELECT {columns}
-                FROM `steemit-307308`.{dataset}.{table},
+                FROM `steemit-307308.{dataset}.{table}`,
                     UNNEST (transactions) AS transaction_unnest,
                     UNNEST (transaction_unnest.operations) AS operations_unnest
-                WHERE operations_unnest.value.title = ""
+                WHERE 
+                    _TABLE_SUFFIX BETWEEN '42000000_43245905_01' AND '53950540_54433707_48'
+                    AND operations_unnest.value.title = ""
                     AND REGEXP_CONTAINS(operations_unnest.value.body, @words)
                 LIMIT @limit
             """.format(columns=columns, dataset=self.dataset, table=self.table)
@@ -160,13 +178,52 @@ class CommentView(BaseResource):
                     bigquery.ScalarQueryParameter('limit', 'INT64', size),
                 ]
             )
+        elif post_permlinks:
+            query_template = """
+                SELECT {columns}
+                FROM `steemit-307308.{dataset}.{table}`,
+                    UNNEST (transactions) AS transaction_unnest,
+                    UNNEST (transaction_unnest.operations) AS operations_unnest
+                WHERE 
+                    _TABLE_SUFFIX BETWEEN '42000000_43245905_01' AND '53950540_54433707_48'
+                    AND operations_unnest.value.title = "" 
+                    AND operations_unnest.value.parent_permlink IN UNNEST(@post_permlinks)
+                LIMIT @limit
+            """.format(columns=columns, dataset=self.dataset, table=self.table)
+            job_config = bigquery.QueryJobConfig(
+                query_parameters=[
+                    bigquery.ArrayQueryParameter("post_permlinks", "STRING", post_permlinks),
+                    bigquery.ScalarQueryParameter('limit', 'INT64', size),
+                ]
+            )
+        elif tags:
+            query_template = """
+                SELECT {columns}
+                FROM `steemit-307308.{dataset}.{table}`,
+                    UNNEST (transactions) AS transaction_unnest,
+                    UNNEST (transaction_unnest.operations) AS operations_unnest
+                WHERE 
+                    _TABLE_SUFFIX BETWEEN '42000000_43245905_01' AND '53950540_54433707_48'
+                    AND operations_unnest.value.title != ""
+                    AND ARRAY_LENGTH(operations_unnest.value.json_metadata_dict.tags_list_str) != 0
+                    AND operations_unnest.value.json_metadata_dict.tags_list_str[offset(0)] IN UNNEST(@tags)
+                LIMIT @limit
+            """.format(columns=columns, dataset=self.dataset, table=self.table)
+            job_config = bigquery.QueryJobConfig(
+                query_parameters=[
+                    bigquery.ArrayQueryParameter("tags", "STRING", tags),
+                    bigquery.ScalarQueryParameter('limit', 'INT64', size),
+                ]
+            )
         elif after or before:
             query_template = """
                 SELECT {columns}
-                FROM `steemit-307308`.{dataset}.{table},
+                FROM `steemit-307308.{dataset}.{table}`,
                     UNNEST (transactions) AS transaction_unnest,
                     UNNEST (transaction_unnest.operations) AS operations_unnest
-                WHERE operations_unnest.value.title = ""
+                WHERE 
+                    _TABLE_SUFFIX BETWEEN '42000000_43245905_01' AND '53950540_54433707_48'
+                    AND operations_unnest.value.title = ""
                     AND timestamp >= @after AND timestamp <= @before
                 LIMIT @limit
             """.format(columns=columns, dataset=self.dataset, table=self.table)
@@ -180,10 +237,12 @@ class CommentView(BaseResource):
         else:
             query_template = """
                 SELECT {columns}
-                FROM `steemit-307308`.{dataset}.{table},
+                FROM `steemit-307308.{dataset}.{table}`,
                     UNNEST (transactions) AS transaction_unnest,
                     UNNEST (transaction_unnest.operations) AS operations_unnest
-                WHERE operations_unnest.value.title = ""
+                WHERE 
+                    _TABLE_SUFFIX BETWEEN '42000000_43245905_01' AND '53950540_54433707_48'
+                    AND operations_unnest.value.title = ""
                 LIMIT @limit
             """.format(columns=columns, dataset=self.dataset, table=self.table)
             job_config = bigquery.QueryJobConfig(
@@ -192,18 +251,9 @@ class CommentView(BaseResource):
                 ]
             )
 
-        print('table {}'.format(table))
-        print('size {}'.format(size))
-        print('columns {}'.format(columns))
-        print('witnesses {}'.format(witnesses))
-        print('ids {}'.format(ids))
-        print('block_ids {}'.format(block_ids))
-        print('after {}'.format(after))
-        print('before {}'.format(block_ids))
-        print('authors {}'.format(authors))
-
         query_job = client.query(query_template, job_config=job_config)
         query_job.result()
         df_results = query_job.to_dataframe()
+        print(df_results)
         json_results = ujson.loads(df_results.to_json(orient='records'))
         self.ok(resp, json_results)

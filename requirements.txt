@@ -1,6 +1,7 @@
 click==7.1.2
 falcon==3.0.1
 falcon-cors==1.1.7
+falcon_auth==1.1.0
 google-api-core==1.26.3
 google-auth==1.30.0
 google-cloud-bigquery==2.15.0

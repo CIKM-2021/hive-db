@@ -16,6 +16,11 @@ logger = Logger(__name__)
 
 
 class BlockView(BaseResource):
+    def __init__(self):
+        super().__init__()
+        self.dataset = 'hive_zurich'
+        self.table = settings.TABLES
+
     def on_get(self, req, resp):
         # init client
         credentials = get_credentials()
@@ -32,9 +37,9 @@ class BlockView(BaseResource):
         operations = req.get_param('operations')
 
         if fields is not None:
-            columns = fields.split(',')
+            columns = fields
         else:
-            columns = ['*']
+            columns = '*'
         if size is None:
             size = 25
         if witnesses:
@@ -61,60 +66,60 @@ class BlockView(BaseResource):
 
         if witnesses:
             query_template = """
-                SELECT @columns, TO_JSON_STRING(blocks)
-                FROM `steemit-307308`.hive.block_01 AS blocks
-                WHERE witness IN UNNEST(@witnesses)
+                SELECT {columns}
+                FROM `steemit-307308.{dataset}.{table}`
+                WHERE 
+                    _TABLE_SUFFIX BETWEEN '42000000_43245905_01' AND '53950540_54433707_48'
+                    AND witness IN UNNEST(@witnesses)
                 LIMIT @limit
-            """
+            """.format(columns=columns, dataset=self.dataset, table=self.table)
             job_config = bigquery.QueryJobConfig(
-                query_parameters=[
-                    bigquery.ArrayQueryParameter("columns", "STRING", columns),
+                query_parameter =[
                     bigquery.ArrayQueryParameter("witnesses", "STRING", witnesses),
-                    bigquery.ScalarQueryParameter('table', 'STRING', table),
                     bigquery.ScalarQueryParameter('limit', 'INT64', size),
                 ]
             )
         elif ids:
             query_template = """
-                SELECT @columns, TO_JSON_STRING(blocks)
-                FROM `steemit-307308`.hive.block_01 AS blocks
-                WHERE id IN UNNEST(@ids)
+                SELECT {columns}
+                FROM `steemit-307308.{dataset}.{table}`
+                WHERE 
+                    _TABLE_SUFFIX BETWEEN '42000000_43245905_01' AND '53950540_54433707_48'
+                    AND id IN UNNEST(@ids)
                 LIMIT @limit
-            """
+            """.format(columns=columns, dataset=self.dataset, table=self.table)
             job_config = bigquery.QueryJobConfig(
                 query_parameters=[
-                    bigquery.ArrayQueryParameter("columns", "STRING", columns),
                     bigquery.ArrayQueryParameter("ids", "INT64", ids),
-                    bigquery.ScalarQueryParameter('table', 'STRING', table),
                     bigquery.ScalarQueryParameter('limit', 'INT64', size),
                 ]
             )
         elif block_ids:
             query_template = """
-                SELECT @columns, TO_JSON_STRING(blocks)
-                FROM `steemit-307308`.hive.block_01 AS blocks
-                WHERE block_id IN UNNEST(@block_ids)
+                SELECT {columns}
+                FROM `steemit-307308.{dataset}.{table}`
+                WHERE 
+                    _TABLE_SUFFIX BETWEEN '42000000_43245905_01' AND '53950540_54433707_48'
+                    AND block_id IN UNNEST(@block_ids)
                 LIMIT @limit
-            """
+            """.format(columns=columns, dataset=self.dataset, table=self.table)
             job_config = bigquery.QueryJobConfig(
                 query_parameters=[
-                    bigquery.ArrayQueryParameter("columns", "STRING", columns),
                     bigquery.ArrayQueryParameter("block_ids", "STRING", block_ids),
-                    bigquery.ScalarQueryParameter('table', 'STRING', table),
                     bigquery.ScalarQueryParameter('limit', 'INT64', size),
                 ]
             )
         elif after or before:
             query_template = """
-                SELECT @columns, TO_JSON_STRING(blocks)
-                FROM `steemit-307308`.hive.block_01 AS blocks
-                WHERE timestamp >= @after AND timestamp <= @before
+                SELECT {columns}
+                FROM `steemit-307308.{dataset}.{table}`
+                WHERE 
+                    _TABLE_SUFFIX BETWEEN '42000000_43245905_01' AND '53950540_54433707_48'
+                    AND timestamp >= @after AND timestamp <= @before
                 LIMIT @limit
-            """
+            """.format(columns=columns, dataset=self.dataset, table=self.table)
             job_config = bigquery.QueryJobConfig(
                 query_parameters=[
-                    bigquery.ArrayQueryParameter("columns", "STRING", columns),
-                    bigquery.ScalarQueryParameter('table', 'STRING', table),
                     bigquery.ScalarQueryParameter("after", "TIMESTAMP", after),
                     bigquery.ScalarQueryParameter("before", "TIMESTAMP", before),
                     bigquery.ScalarQueryParameter('limit', 'INT64', size),
@@ -122,49 +127,38 @@ class BlockView(BaseResource):
             )
         elif operations:
             query_template = """
-                SELECT @columns, TO_JSON_STRING(blocks)
-                FROM `steemit-307308.hive.block_01` AS blocks,
+                SELECT {columns}
+                FROM `steemit-307308.hive.block_01`,
                     UNNEST (transactions) AS transaction_unnest,
                     UNNEST (transaction_unnest.operations) AS operations_unnest
-                WHERE operations_unnest.type IN UNNEST(@operations)
+                WHERE 
+                    _TABLE_SUFFIX BETWEEN '42000000_43245905_01' AND '53950540_54433707_48'
+                    AND operations_unnest.type IN UNNEST(@operations)
                 LIMIT @limit
-            """
+            """.format(columns=columns, dataset=self.dataset, table=self.table)
             job_config = bigquery.QueryJobConfig(
                 query_parameters=[
-                    bigquery.ArrayQueryParameter("columns", "STRING", columns),
-                    bigquery.ScalarQueryParameter('table', 'STRING', table),
                     bigquery.ArrayQueryParameter("operations", "STRING", operations),
                     bigquery.ScalarQueryParameter('limit', 'INT64', size),
                 ]
             )
         else:
             query_template = """
-                SELECT @columns, TO_JSON_STRING(blocks)
-                FROM `steemit-307308`.hive.block_01 AS blocks
+                SELECT {columns}
+                FROM `steemit-307308.{dataset}.{table}`
+                WHERE 
+                    _TABLE_SUFFIX BETWEEN '42000000_43245905_01' AND '53950540_54433707_48'
                 LIMIT @limit
-            """
+            """.format(columns=columns, dataset=self.dataset, table=self.table)
             job_config = bigquery.QueryJobConfig(
                 query_parameters=[
-                    bigquery.ArrayQueryParameter("columns", "STRING", columns),
-                    bigquery.ScalarQueryParameter('table', 'STRING', table),
                     bigquery.ScalarQueryParameter('limit', 'INT64', size),
                 ]
             )
 
-
-
-        print('table {}'.format(table))
-        print('size {}'.format(size))
-        print('columns {}'.format(columns))
-        print('witnesses {}'.format(witnesses))
-        print('ids {}'.format(ids))
-        print('block_ids {}'.format(block_ids))
-        print('after {}'.format(after))
-        print('before {}'.format(block_ids))
-
         query_job = client.query(query_template, job_config=job_config)
-
-        print(query_job.to_dataframe())
-        df_results = query_job.to_dataframe()['f1_']
+        query_job.result()
+        df_results = query_job.to_dataframe()
+        print(df_results)
         json_results = ujson.loads(df_results.to_json(orient='records'))
         self.ok(resp, json_results)

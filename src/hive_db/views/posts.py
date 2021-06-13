@@ -17,6 +17,11 @@ logger = Logger(__name__)
 
 
 class PostView(BaseResource):
+    def __init__(self):
+        super().__init__()
+        self.dataset = 'hive_zurich'
+        self.table = settings.TABLES
+
     def on_get(self, req, resp):
         # init client
         credentials = get_credentials()
@@ -28,18 +33,18 @@ class PostView(BaseResource):
         ids = req.get_param('ids')
         block_ids = req.get_param('block_ids')
         witnesses = req.get_param('witnesses')
+        tags = req.get_param('tags')
 
         before = req.get_param('before')
         after = req.get_param('after')
         authors = req.get_param('authors')
         permlinks = req.get_param('permlinks')
         search = req.get_param('search')
-        tags = req.get_param('tags')
 
         if fields is not None:
-            columns = fields.split(',')
+            columns = fields
         else:
-            columns = ['*']
+            columns = '*'
         if authors:
             authors = authors.split(',')
         if search:
@@ -66,32 +71,34 @@ class PostView(BaseResource):
 
         if witnesses:
             query_template = """
-                SELECT @columns, TO_JSON_STRING(blocks)
-                FROM `steemit-307308.hive_zurich.block_data_53467816_53950539_47` AS blocks,
+                SELECT {columns}
+                FROM `steemit-307308.{dataset}.{table}`,
                     UNNEST (transactions) AS transaction_unnest,
                     UNNEST (transaction_unnest.operations) AS operations_unnest
-                WHERE operations_unnest.value.title != ""
+                WHERE 
+                    _TABLE_SUFFIX BETWEEN '42000000_43245905_01' AND '53950540_54433707_48'
+                    AND operations_unnest.value.title != ""
                     AND witness IN UNNEST(@witnesses)
                 LIMIT @limit
-            """
+            """.format(columns=columns, dataset=self.dataset, table=self.table)
             job_config = bigquery.QueryJobConfig(
                 query_parameters=[
-                    bigquery.ArrayQueryParameter("columns", "STRING", columns),
-                    bigquery.ScalarQueryParameter('table', 'STRING', table),
                     bigquery.ArrayQueryParameter("witnesses", "STRING", witnesses),
                     bigquery.ScalarQueryParameter('limit', 'INT64', size),
                 ]
             )
         elif ids:
             query_template = """
-                SELECT @columns, TO_JSON_STRING(blocks)
-                FROM `steemit-307308.hive_zurich.block_data_53467816_53950539_47` AS blocks,
+                SELECT {columns}
+                FROM `steemit-307308.{dataset}.{table}`,
                     UNNEST (transactions) AS transaction_unnest,
                     UNNEST (transaction_unnest.operations) AS operations_unnest
-                WHERE operations_unnest.value.title != ""
+                WHERE 
+                    _TABLE_SUFFIX BETWEEN '42000000_43245905_01' AND '53950540_54433707_48'
+                    AND operations_unnest.value.title != ""
                     AND id IN UNNEST(@ids)
                 LIMIT @limit
-            """
+            """.format(columns=columns, dataset=self.dataset, table=self.table)
             job_config = bigquery.QueryJobConfig(
                 query_parameters=[
                     bigquery.ArrayQueryParameter("columns", "STRING", columns),
@@ -102,14 +109,16 @@ class PostView(BaseResource):
             )
         elif block_ids:
             query_template = """
-                SELECT @columns, TO_JSON_STRING(blocks)
-                FROM `steemit-307308.hive_zurich.block_data_53467816_53950539_47` AS blocks,
+                SELECT {columns}
+                FROM `steemit-307308.{dataset}.{table}`,
                     UNNEST (transactions) AS transaction_unnest,
                     UNNEST (transaction_unnest.operations) AS operations_unnest
-                WHERE operations_unnest.value.title != ""
+                WHERE 
+                    _TABLE_SUFFIX BETWEEN '42000000_43245905_01' AND '53950540_54433707_48'
+                    AND operations_unnest.value.title != ""
                     AND id IN UNNEST(@block_ids)
                 LIMIT @limit
-            """
+            """.format(columns=columns, dataset=self.dataset, table=self.table)
             job_config = bigquery.QueryJobConfig(
                 query_parameters=[
                     bigquery.ArrayQueryParameter("columns", "STRING", columns),
@@ -120,14 +129,16 @@ class PostView(BaseResource):
             )
         elif authors:
             query_template = """
-                SELECT @columns, TO_JSON_STRING(blocks)
-                FROM `steemit-307308.hive_zurich.block_data_53467816_53950539_47` AS blocks,
+                SELECT {columns}
+                FROM `steemit-307308.{dataset}.{table}`,
                     UNNEST (transactions) AS transaction_unnest,
                     UNNEST (transaction_unnest.operations) AS operations_unnest
-                WHERE operations_unnest.value.title != ""
+                WHERE 
+                    _TABLE_SUFFIX BETWEEN '42000000_43245905_01' AND '53950540_54433707_48'
+                    AND operations_unnest.value.title != ""
                     AND operations_unnest.value.author IN UNNEST(@authors)
                 LIMIT @limit
-            """
+            """.format(columns=columns, dataset=self.dataset, table=self.table)
             job_config = bigquery.QueryJobConfig(
                 query_parameters=[
                     bigquery.ArrayQueryParameter("columns", "STRING", columns),
@@ -138,14 +149,16 @@ class PostView(BaseResource):
             )
         elif permlinks:
             query_template = """
-                SELECT @columns, TO_JSON_STRING(blocks)
-                FROM `steemit-307308.hive_zurich.block_data_53467816_53950539_47` AS blocks,
+                SELECT {columns}
+                FROM `steemit-307308.{dataset}.{table}`,
                     UNNEST (transactions) AS transaction_unnest,
                     UNNEST (transaction_unnest.operations) AS operations_unnest
-                WHERE operations_unnest.value.title != ""
+                WHERE 
+                    _TABLE_SUFFIX BETWEEN '42000000_43245905_01' AND '53950540_54433707_48'
+                    AND operations_unnest.value.title != ""
                     AND operations_unnest.value.permlink IN UNNEST(@permlinks)
                 LIMIT @limit
-            """
+            """.format(columns=columns, dataset=self.dataset, table=self.table)
             job_config = bigquery.QueryJobConfig(
                 query_parameters=[
                     bigquery.ArrayQueryParameter("columns", "STRING", columns),
@@ -156,14 +169,16 @@ class PostView(BaseResource):
             )
         elif search:
             query_template = """
-                SELECT @columns, TO_JSON_STRING(blocks)
-                FROM `steemit-307308.hive_zurich.block_data_53467816_53950539_47` AS blocks,
+                SELECT {columns}
+                FROM `steemit-307308.{dataset}.{table}`,
                     UNNEST (transactions) AS transaction_unnest,
                     UNNEST (transaction_unnest.operations) AS operations_unnest
-                WHERE operations_unnest.value.title != ""
+                WHERE 
+                    _TABLE_SUFFIX BETWEEN '42000000_43245905_01' AND '53950540_54433707_48'
+                    AND operations_unnest.value.title != ""
                     AND REGEXP_CONTAINS(operations_unnest.value.body, @words)
                 LIMIT @limit
-            """
+            """.format(columns=columns, dataset=self.dataset, table=self.table)
             job_config = bigquery.QueryJobConfig(
                 query_parameters=[
                     bigquery.ArrayQueryParameter("columns", "STRING", columns),
@@ -172,16 +187,37 @@ class PostView(BaseResource):
                     bigquery.ScalarQueryParameter('limit', 'INT64', size),
                 ]
             )
-        elif after or before:
+        elif tags:
             query_template = """
-                SELECT @columns, TO_JSON_STRING(blocks)
-                FROM `steemit-307308.hive_zurich.block_data_53467816_53950539_47` AS blocks,
+                SELECT {columns}
+                FROM `steemit-307308.{dataset}.{table}`,
                     UNNEST (transactions) AS transaction_unnest,
                     UNNEST (transaction_unnest.operations) AS operations_unnest
-                WHERE operations_unnest.value.title != ""
+                WHERE 
+                    _TABLE_SUFFIX BETWEEN '42000000_43245905_01' AND '53950540_54433707_48'
+                    AND operations_unnest.value.title != ""
+                    AND ARRAY_LENGTH(operations_unnest.value.json_metadata_dict.tags_list_str) != 0
+                    AND operations_unnest.value.json_metadata_dict.tags_list_str[offset(0)] IN UNNEST(@tags)
+                LIMIT @limit
+            """.format(columns=columns, dataset=self.dataset, table=self.table)
+            job_config = bigquery.QueryJobConfig(
+                query_parameters=[
+                    bigquery.ArrayQueryParameter("tags", "STRING", tags),
+                    bigquery.ScalarQueryParameter('limit', 'INT64', size),
+                ]
+            )
+        elif after or before:
+            query_template = """
+                SELECT {columns}
+                FROM `steemit-307308.{dataset}.{table}`,
+                    UNNEST (transactions) AS transaction_unnest,
+                    UNNEST (transaction_unnest.operations) AS operations_unnest
+                WHERE 
+                    _TABLE_SUFFIX BETWEEN '42000000_43245905_01' AND '53950540_54433707_48'
+                    AND operations_unnest.value.title != ""
                     AND timestamp >= @after AND timestamp <= @before
                 LIMIT @limit
-            """
+            """.format(columns=columns, dataset=self.dataset, table=self.table)
             job_config = bigquery.QueryJobConfig(
                 query_parameters=[
                     bigquery.ArrayQueryParameter("columns", "STRING", columns),
@@ -193,66 +229,24 @@ class PostView(BaseResource):
             )
         else:
             query_template = """
-                SELECT @columns, TO_JSON_STRING(blocks)
-                FROM `steemit-307308.hive_zurich.block_data_53467816_53950539_47` AS blocks,
+                SELECT {columns}
+                FROM `steemit-307308.{dataset}.{table}`,
                     UNNEST (transactions) AS transaction_unnest,
                     UNNEST (transaction_unnest.operations) AS operations_unnest
-                WHERE operations_unnest.value.title != ""
+                WHERE 
+                    _TABLE_SUFFIX BETWEEN '42000000_43245905_01' AND '53950540_54433707_48'
+                    AND operations_unnest.value.title != ""
                 LIMIT @limit
-            """
+            """.format(columns=columns, dataset=self.dataset, table=self.table)
             job_config = bigquery.QueryJobConfig(
                 query_parameters=[
-                    bigquery.ArrayQueryParameter("columns", "STRING", columns),
-                    bigquery.ScalarQueryParameter('table', 'STRING', table),
                     bigquery.ScalarQueryParameter('limit', 'INT64', size),
                 ]
             )
 
-        print('table {}'.format(table))
-        print('size {}'.format(size))
-        print('columns {}'.format(columns))
-        print('witnesses {}'.format(witnesses))
-        print('ids {}'.format(ids))
-        print('block_ids {}'.format(block_ids))
-        print('after {}'.format(after))
-        print('before {}'.format(block_ids))
-        print('authors {}'.format(authors))
-
         query_job = client.query(query_template, job_config=job_config)
-        print(query_job.to_dataframe())
-        df_results = query_job.to_dataframe()['f1_']
-        json_results = ujson.loads(df_results.to_json(orient='records'))
-        self.ok(resp, json_results)
-
-
-class TopPostView(BaseResource):
-    def on_options(self, req, res):
-        res.status = falcon.HTTP_200
-        res.set_header('Access-Control-Allow-Origin', '*')
-        res.set_header('Access-Control-Allow-Methods', 'GET')
-        res.set_header('Access-Control-Allow-Headers', 'Content-Type')
-
-    def on_get(self, req, resp):
-        # init client
-        credentials = get_credentials()
-        client = bigquery.Client(credentials=credentials, project=credentials.project_id)
-        size = 10000
-        query_template = """
-                SELECT count(operations_unnest.value.author) as amount, operations_unnest.value.author
-                FROM `steemit-307308.hive_zurich.block_data_53467816_53950539_47`,
-                    UNNEST (transactions) AS transaction_unnest,
-                    UNNEST (transaction_unnest.operations) AS operations_unnest
-                WHERE operations_unnest.value.title != ""
-                GROUP BY operations_unnest.value.author
-                ORDER BY amount desc
-                LIMIT @limit
-            """
-        job_config = bigquery.QueryJobConfig(
-            query_parameters=[
-                bigquery.ScalarQueryParameter('limit', 'INT64', size),
-            ]
-        )
-        query_job = client.query(query_template, job_config=job_config)
+        query_job.result()
         df_results = query_job.to_dataframe()
+        print(df_results)
         json_results = ujson.loads(df_results.to_json(orient='records'))
         self.ok(resp, json_results)
