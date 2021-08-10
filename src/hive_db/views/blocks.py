@@ -128,7 +128,7 @@ class BlockView(BaseResource):
         elif operations:
             query_template = """
                 SELECT {columns}
-                FROM `steemit-307308.hive.block_01`,
+                FROM `steemit-307308.{dataset}.{table}`,
                     UNNEST (transactions) AS transaction_unnest,
                     UNNEST (transaction_unnest.operations) AS operations_unnest
                 WHERE 
