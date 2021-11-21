@@ -1,19 +1,12 @@
 # HIVE Data service
+[![python](https://img.shields.io/badge/python-3.6.15-green)](https://www.python.org/)
+[![slither](https://img.shields.io/badge/falcon-3.0.1-yellowgreen)](https://falcon.readthedocs.io/en/stable/)
+[![slither](https://img.shields.io/badge/google--cloud--bigquery-2.15.0-red)](https://www.dgl.ai/)
 
-## Install
-```
-docker pull nguyenminh1807/hive-api:v1.0
-```
+## API Examples
 
-## Run local
-```
-docker run -it --rm -p 5000:5000 nguyenminh18078/hive-api:v1.0
-```
-
-## Examples
-Origin URL: 
-- Local: `localhost:8000/`
-- Public: `sochaindb.com/`
+- We provided public APIs authenticated by API token *WrrXP6szu06wlLQVfAM3b0FD8i4612zc* through root url *sochaindb.com*.
+- The APIs were requested by [httpie tool](https://httpie.io/).
 
 ### Block APIs
 
@@ -147,3 +140,18 @@ GET: posts before a specific date
 ```
 http GET sochaindb.com/hive-api/v1.0.0/posts?size=3&fields=signing_key,transaction_ids,id,block_id,witness&before=1620171391 TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
 ```
+
+## Run local
+
+- If you want to run your own service, you can run the available docker image.
+
+```
+docker pull nguyenminh1807/hive-api:v1.0
+```
+
+## Run local services
+```
+docker run -it --rm -p 5000:5000 nguyenminh18078/hive-api:v1.0
+```
+- When you run your service by docker image, you can request these APIs by replacing root url *sochaindb.com* to *localhost:5000*
+
