@@ -126,7 +126,7 @@ class TopWordView(BaseResource):
                     UNNEST (transaction_unnest.operations) AS operations_unnest
                 WHERE 
                     _TABLE_SUFFIX BETWEEN '42000000_43245905_01' AND '53950540_54433707_48'
-                    AND operations_unnest.value.title IS NOT NULL
+                    AND operations_unnest.value.title != ""
                 LIMIT @limit
             """.format(dataset=self.dataset, table=self.table)
         job_config = bigquery.QueryJobConfig(

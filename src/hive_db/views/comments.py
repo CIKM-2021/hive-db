@@ -205,7 +205,7 @@ class CommentView(BaseResource):
                 WHERE 
                     _TABLE_SUFFIX BETWEEN '42000000_43245905_01' AND '53950540_54433707_48'
                     AND operations_unnest.value.title != ""
-                    AND ARRAY_LENGTH(operations_unnest.value.json_metadata_dict.tags_list_str) != 0
+                    AND ARRAY_LENGTH(operations_unnest.value.json_metadata_dict.tags_list_str) = 0
                     AND operations_unnest.value.json_metadata_dict.tags_list_str[offset(0)] IN UNNEST(@tags)
                 LIMIT @limit
             """.format(columns=columns, dataset=self.dataset, table=self.table)
