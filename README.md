@@ -7,10 +7,13 @@
 
 - We provided public APIs authenticated by API token *WrrXP6szu06wlLQVfAM3b0FD8i4612zc* through root url *sochaindb.com*.
 - The APIs were requested by [httpie tool](https://httpie.io/). You can quickly install by a command line depended on your OS.
+
 On Linux:
     `apt install httpie`
+
 On Window:
     `choco install httpie`
+
 On macOS:
     `brew install httpie`
 
