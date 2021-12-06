@@ -128,7 +128,7 @@ GET: posts contain words
 http GET sochaindb.com/hive-api/v1.0.0/posts?size=3&fields=signing_key,transaction_ids,id,block_id,witness&search=covid TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
 ```
 
-GET: posts by permlinhk
+GET: posts by permlink
 ```
 http GET sochaindb.com/hive-api/v1.0.0/posts?size=3&fields=signing_key,transaction_ids,id,block_id,witness&permlinks=covid-drove-us-into-digitization-and-crypto-or-freewrite-weekend-16-05-21,qoi4z2 TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
 ```
