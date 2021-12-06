@@ -89,7 +89,7 @@ GET: comments contain words
 http GET sochaindb.com/hive-api/v1.0.0/comments?size=3&fields=signing_key,transaction_ids,id,block_id,witness&search=dish,aktywnym TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
 ```
 
-GET: comments by permlinhk
+GET: comments by permlink
 ```
 http GET sochaindb.com/hive-api/v1.0.0/comments?size=3&fields=signing_key,transaction_ids,id,block_id,witness&permlinks=re-ptaku-qoi4z7,qoi4z2 TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
 ```
