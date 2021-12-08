@@ -152,6 +152,23 @@ GET: posts before a specific date
 http GET "sochaindb.com/hive-api/v1.0.0/posts?size=3&fields=signing_key,transaction_ids,id,block_id,witness&before=1620171391" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
 ```
 
+### Statistics APIs
+
+GET: the list of top users based on the number of posts.
+```
+http GET "sochaindb.com/hive-api/v1.0.0/top_posts?size=1000" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
+```
+
+GET: the list of top users based on the number of comments.
+```
+http GET "sochaindb.com/hive-api/v1.0.0/top_comments?size=1000" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
+```
+
+GET: the list of contents of top posts and comments
+```
+http GET "sochaindb.com/hive-api/v1.0.0/top_words?size=1000" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
+```
+
 # Run a local service
 
 - You also could pull the pre-built Docker image to run the Hive Data service on the local machine.
