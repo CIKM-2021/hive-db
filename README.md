@@ -1,7 +1,7 @@
 # HIVE Data service
 [![python](https://img.shields.io/badge/python-3.6.15-green)](https://www.python.org/)
 [![slither](https://img.shields.io/badge/falcon-3.0.1-yellowgreen)](https://falcon.readthedocs.io/en/stable/)
-[![slither](https://img.shields.io/badge/google--cloud--bigquery-2.15.0-red)](https://www.dgl.ai/)
+[![slither](https://img.shields.io/badge/google--cloud--bigquery-2.15.0-red)](https://cloud.google.com/bigquery/)
 
 ## API Examples
 
