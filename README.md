@@ -5,7 +5,7 @@
 
 ## Setup Environment
 
-- We provide public APIs via the root URL *http://sochaindb.com*,  currently authenticated by the key *TOKEN* with the value *WrrXP6szu06wlLQVfAM3b0FD8i4612zc* in the Request Header.
+- We provide public APIs via the root URL *http://sochaindb.com*,  currently authenticated by the key *"TOKEN"* with the value *"WrrXP6szu06wlLQVfAM3b0FD8i4612zc"* in the Request Header.
 - The APIs could be requested by [httpie tool](https://httpie.io/). Depending on your OS, you can quickly install this tool by a command line.
 
 On Linux:
