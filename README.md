@@ -3,7 +3,7 @@
 [![slither](https://img.shields.io/badge/falcon-3.0.1-yellowgreen)](https://falcon.readthedocs.io/en/stable/)
 [![slither](https://img.shields.io/badge/google--cloud--bigquery-2.15.0-red)](https://cloud.google.com/bigquery/)
 
-## API Examples
+## Setup Environment
 
 - We provided public APIs authenticated by the HEADER TOKEN *WrrXP6szu06wlLQVfAM3b0FD8i4612zc* through the root URL *http://sochaindb.com*.
 - The APIs could be requested by [httpie tool](https://httpie.io/). Depending on your OS, you can quickly install this tool by a command line.
@@ -16,6 +16,8 @@ On Window:
 
 On macOS:
     `brew install httpie`
+
+## Examples of the API Calls
 
 ### Block APIs
 
@@ -150,19 +152,21 @@ GET: posts before a specific date
 http GET "sochaindb.com/hive-api/v1.0.0/posts?size=3&fields=signing_key,transaction_ids,id,block_id,witness&before=1620171391" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
 ```
 
-## Run local
+# Run a local service
 
-- If you want to run your own service, you can run the available docker image.
+- You also could pull the pre-built Docker image to run the Hive Data service on the local machine.
 
 ```
 docker pull nguyenminh1807/hive-api:v1.0
 ```
 
-## Run local services
+- Then, you run the docker container.
+
 ```
-docker run -it --rm -p 5000:5000 nguyenminh18078/hive-api:v1.0
+docker run -it --rm -p 5000:5000 nguyenminh1807/hive-api:v1.0
 ```
-- When you run your service by docker image, you can request these APIs by replacing root url *sochaindb.com* to *localhost:5000*
+
+- When you have run the local service by the docker image, you can request these APIs by replacing root URL *sochaindb.com* with *localhost:5000*.
 
 
 # LICENSE
