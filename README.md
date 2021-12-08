@@ -166,7 +166,7 @@ docker pull nguyenminh1807/hive-api:v1.0
 docker run -it --rm -p 5000:5000 nguyenminh1807/hive-api:v1.0
 ```
 
-- When you have run the local service by the docker image, you can request these APIs by replacing root URL *sochaindb.com* with *localhost:5000*.
+- When you have run the local service by the docker image, you can request these APIs by replacing the root URL *sochaindb.com* with *localhost:5000*.
 
 
 # LICENSE
