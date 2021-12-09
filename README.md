@@ -33,8 +33,8 @@ License
 | ids | Filter data by the IDs of identified blocks. | None | List of strings |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |
 | block_ids | Filter data by the hash of blocks which is similar to IDs, however, this isused to reference each other blocks in the database. | None | List of strings |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |
 | operations | Filter by type of operations of the transactions in the blocks. | None | List of strings |  :heavy_check_mark: | - | - | - |
-| after | Filter data after the time. The available begin time in our databaseis at 16:40:09 UTC on 27th March 2020 for the early version. | None | UTC format or timestamp |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: | - |
-| before | Filter data before the time. The available last time in our databaseis at 23:59:59 UTC on 31st May 2021 for the early version. | None | UTC format or timestamp |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: | - |
+| after | Filter data after the time. The available begin time in our databaseis at 16:40:09 UTC on March 27th, 2020 for the early version. | None | UTC format or timestamp |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: | - |
+| before | Filter data before the time. The available last time in our databaseis at 17:01:15 UTC on December 6th, 2021 for the early version. | None | UTC format or timestamp |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: | - |
 | authors | Filter by the authors. If users are interested in some posts or comments,they can add a list of authors to search for more actions. | None | List of strings | - |  :heavy_check_mark: |  :heavy_check_mark: | - |
 | permlink | Filter by "permlink" being a partition of posts or comments’ URL on Hivesocial network. Users can add a list of "permlinks" for reducing runtime. | None | List of strings | - |  :heavy_check_mark: |  :heavy_check_mark: | - |
 | post_permlinks | Filter the comments in the posts having the "permlinks". | None | List of strings | - | - |  :heavy_check_mark: | - |
