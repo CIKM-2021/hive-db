@@ -195,6 +195,10 @@ GET: the list of contents of top posts.
 http GET "sochaindb.com/hive-api/v1.0.0/top_words?size=1000" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
 ```
 
+## Appendix
+
+You can get operation types from this [list](https://github.com/SOCHAINDB/hive-db/blob/master/assets/summary.org).
+
 # Run a local service
 
 - You also could pull the pre-built Docker image to run the Hive Data service on the local machine.
@@ -227,6 +231,3 @@ The dataset is licensed under the
 [cc-by-sa-image]: https://licensebuttons.net/l/by-sa/4.0/88x31.png
 [cc-by-sa-shield]: https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg
 
-# Appendix
-
-You can get operation type from this [list](https://github.com/SOCHAINDB/hive-db/blob/master/assets/summary.org).
