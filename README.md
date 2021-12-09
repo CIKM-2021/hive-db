@@ -9,10 +9,16 @@
 ## Setup Environment
 
 - We provide public APIs via the endpoint *http://sochaindb.com*,  currently authenticated by the key *"TOKEN"* with the value *"WrrXP6szu06wlLQVfAM3b0FD8i4612zc"* in the Request Header.
-- The APIs could be requested by [httpie tool](https://httpie.io/). Depending on your OS, you can quickly install this tool by a command line.
+- The APIs could be requested by the [httpie tool](https://httpie.io/). Depending on your OS, you can quickly install this tool by a command line.
 
-On Linux: `apt install httpie`
-License
+On Linux:
+    `apt install httpie`
+
+On Window:
+    `choco install httpie`
+
+On macOS:
+    `brew install httpie`
 
 ## Parameters Usage
 
