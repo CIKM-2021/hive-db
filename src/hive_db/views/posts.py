@@ -45,6 +45,12 @@ class PostView(BaseResource):
             columns = fields
         else:
             columns = '*'
+        if size is None:
+            size = 25
+        if witnesses:
+            witnesses = witnesses.split(',')
+        if ids:
+            ids = ids.split(',')
         if authors:
             authors = authors.split(',')
         if search:
@@ -76,7 +82,7 @@ class PostView(BaseResource):
                     UNNEST (transactions) AS transactions,
                     UNNEST (transactions.operations) AS operations
                 WHERE 
-                    _TABLE_SUFFIX BETWEEN '42000000_43245905_01' AND '59567347_59805327_48'
+                    _TABLE_SUFFIX BETWEEN '42000001_43245905_01' AND '59567347_59805327_48'
                     AND operations.value.title != ""
                     AND witness IN UNNEST(@witnesses)
                 LIMIT @limit
@@ -94,7 +100,7 @@ class PostView(BaseResource):
                     UNNEST (transactions) AS transactions,
                     UNNEST (transactions.operations) AS operations
                 WHERE 
-                    _TABLE_SUFFIX BETWEEN '42000000_43245905_01' AND '59567347_59805327_48'
+                    _TABLE_SUFFIX BETWEEN '42000001_43245905_01' AND '59567347_59805327_48'
                     AND operations.value.title != ""
                     AND id IN UNNEST(@ids)
                 LIMIT @limit
@@ -114,7 +120,7 @@ class PostView(BaseResource):
                     UNNEST (transactions) AS transactions,
                     UNNEST (transactions.operations) AS operations
                 WHERE 
-                    _TABLE_SUFFIX BETWEEN '42000000_43245905_01' AND '59567347_59805327_48'
+                    _TABLE_SUFFIX BETWEEN '42000001_43245905_01' AND '59567347_59805327_48'
                     AND operations.value.title != ""
                     AND id IN UNNEST(@block_ids)
                 LIMIT @limit
@@ -134,7 +140,7 @@ class PostView(BaseResource):
                     UNNEST (transactions) AS transactions,
                     UNNEST (transactions.operations) AS operations
                 WHERE 
-                    _TABLE_SUFFIX BETWEEN '42000000_43245905_01' AND '59567347_59805327_48'
+                    _TABLE_SUFFIX BETWEEN '42000001_43245905_01' AND '59567347_59805327_48'
                     AND operations.value.title != ""
                     AND operations.value.author IN UNNEST(@authors)
                 LIMIT @limit
@@ -154,7 +160,7 @@ class PostView(BaseResource):
                     UNNEST (transactions) AS transactions,
                     UNNEST (transactions.operations) AS operations
                 WHERE 
-                    _TABLE_SUFFIX BETWEEN '42000000_43245905_01' AND '59567347_59805327_48'
+                    _TABLE_SUFFIX BETWEEN '42000001_43245905_01' AND '59567347_59805327_48'
                     AND operations.value.title != ""
                     AND operations.value.permlink IN UNNEST(@permlinks)
                 LIMIT @limit
@@ -174,7 +180,7 @@ class PostView(BaseResource):
                     UNNEST (transactions) AS transactions,
                     UNNEST (transactions.operations) AS operations
                 WHERE 
-                    _TABLE_SUFFIX BETWEEN '42000000_43245905_01' AND '59567347_59805327_48'
+                    _TABLE_SUFFIX BETWEEN '42000001_43245905_01' AND '59567347_59805327_48'
                     AND operations.value.title != ""
                     AND REGEXP_CONTAINS(operations.value.body, @words)
                 LIMIT @limit
@@ -194,7 +200,7 @@ class PostView(BaseResource):
                     UNNEST (transactions) AS transactions,
                     UNNEST (transactions.operations) AS operations
                 WHERE 
-                    _TABLE_SUFFIX BETWEEN '42000000_43245905_01' AND '59567347_59805327_48'
+                    _TABLE_SUFFIX BETWEEN '42000001_43245905_01' AND '59567347_59805327_48'
                     AND operations.value.title != ""
                     AND ARRAY_LENGTH(operations.value.json_metadata_dict.tags_list_str) != 0
                     AND operations.value.json_metadata_dict.tags_list_str[offset(0)] IN UNNEST(@tags)
@@ -213,7 +219,7 @@ class PostView(BaseResource):
                     UNNEST (transactions) AS transactions,
                     UNNEST (transactions.operations) AS operations
                 WHERE 
-                    _TABLE_SUFFIX BETWEEN '42000000_43245905_01' AND '59567347_59805327_48'
+                    _TABLE_SUFFIX BETWEEN '42000001_43245905_01' AND '59567347_59805327_48'
                     AND operations.value.title != ""
                     AND timestamp >= @after AND timestamp <= @before
                 LIMIT @limit
@@ -234,7 +240,7 @@ class PostView(BaseResource):
                     UNNEST (transactions) AS transactions,
                     UNNEST (transactions.operations) AS operations
                 WHERE 
-                    _TABLE_SUFFIX BETWEEN '42000000_43245905_01' AND '59567347_59805327_48'
+                    _TABLE_SUFFIX BETWEEN '42000001_43245905_01' AND '59567347_59805327_48'
                     AND operations.value.title != ""
                 LIMIT @limit
             """.format(columns=columns, dataset=self.dataset, table=self.table)

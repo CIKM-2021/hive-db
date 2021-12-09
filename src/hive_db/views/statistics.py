@@ -41,7 +41,7 @@ class TopPostView(BaseResource):
                     UNNEST (transactions) AS transactions,
                     UNNEST (transactions.operations) AS operations
                 WHERE 
-                    _TABLE_SUFFIX BETWEEN '42000000_43245905_01' AND '59567347_59805327_48'
+                    _TABLE_SUFFIX BETWEEN '42000001_43245905_01' AND '59567347_59805327_48'
                     AND operations.value.title != ""
                 GROUP BY operations.value.author
                 ORDER BY amount desc
@@ -83,7 +83,7 @@ class TopCommentView(BaseResource):
                     UNNEST (transactions) AS transactions,
                     UNNEST (transactions.operations) AS operations
                 WHERE 
-                    _TABLE_SUFFIX BETWEEN '42000000_43245905_01' AND '59567347_59805327_48'
+                    _TABLE_SUFFIX BETWEEN '42000001_43245905_01' AND '59567347_59805327_48'
                     AND operations.value.title = ""
                 GROUP BY operations.value.author
                 ORDER BY amount desc
@@ -125,7 +125,7 @@ class TopWordView(BaseResource):
                     UNNEST (transactions) AS transactions,
                     UNNEST (transactions.operations) AS operations
                 WHERE 
-                    _TABLE_SUFFIX BETWEEN '42000000_43245905_01' AND '59567347_59805327_48'
+                    _TABLE_SUFFIX BETWEEN '42000001_43245905_01' AND '59567347_59805327_48'
                     AND operations.value.title != ""
                 LIMIT @limit
             """.format(dataset=self.dataset, table=self.table)
