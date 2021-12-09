@@ -23,7 +23,7 @@ On macOS:
 ## Parameters Usage
 
 - We will separate the APIs into three targets:
-  1. **Blocks**: get the blocks from the Hive blockchain, which gets all of the transactions of hive blockchain blocks.
+  1. **Blocks**: get the blocks from the Hive blockchain, which gets all of the transactions of blocks.
   2. **Posts**: get the posts we filtered from the transactions of the blocks.
   3. **Comments**: get the comments we filtered from the transactions of the blocks.
 
