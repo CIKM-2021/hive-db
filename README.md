@@ -26,7 +26,7 @@ License
 - The following parameters in bellow table will help the request more specific. Let's go over come them and try each one as well.
 
 
-| Parameter | <div style="width:500px">Description</div> | Default | Accepted Values | blocks | posts | comments | statistic |
+| Parameter | Description | Default | Accepted Values | blocks | posts | comments | statistic |
 |---|--------|---|---|---|---|---|---|
 | size | Limit results of the request. A data sample might be large, especiallythe block samples. Users can set size for reducing runtime. | 25 | Interger |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |
 | fields | Get fields in the schema. Not all fields would be useful, and it dependson individuals’ purposes. Users can add a list of fields for reducing runtime. | "*" | List of strings |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |
