@@ -218,14 +218,12 @@ docker run -it --rm -p 5000:5000 nguyenminh1807/hive-api:v1.0
 
 # LICENSE
 
+Shield: [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![CC BY-SA 4.0][cc-by-sa-shield]][cc-by-sa]
+
 The source code for the data service is licensed under the [MIT License](https://github.com/SOCHAINDB/hive-db/blob/master/LICENSE).
 
-Shield: [![CC BY-SA 4.0][cc-by-sa-shield]][cc-by-sa]
-
 The dataset is licensed under the
-[Creative Commons Attribution-ShareAlike 4.0 International License][cc-by-sa].
-
-[![CC BY-SA 4.0][cc-by-sa-image]][cc-by-sa]
+[Creative Commons Attribution-ShareAlike 4.0 International License](https://github.com/SOCHAINDB/hive-db/blob/master/LICENSE-CC-BY-SA).
 
 [cc-by-sa]: http://creativecommons.org/licenses/by-sa/4.0/
 [cc-by-sa-image]: https://licensebuttons.net/l/by-sa/4.0/88x31.png
