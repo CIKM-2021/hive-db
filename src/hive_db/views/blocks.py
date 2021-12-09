@@ -129,11 +129,11 @@ class BlockView(BaseResource):
             query_template = """
                 SELECT {columns}
                 FROM `steemit-307308.{dataset}.{table}`,
-                    UNNEST (transactions) AS transaction_unnest,
-                    UNNEST (transaction_unnest.operations) AS operations_unnest
+                    UNNEST (transactions) AS transactions,
+                    UNNEST (transactions.operations) AS operations
                 WHERE 
                     _TABLE_SUFFIX BETWEEN '42000000_43245905_01' AND '53950540_54433707_48'
-                    AND operations_unnest.type IN UNNEST(@operations)
+                    AND operations.type IN UNNEST(@operations)
                 LIMIT @limit
             """.format(columns=columns, dataset=self.dataset, table=self.table)
             job_config = bigquery.QueryJobConfig(
