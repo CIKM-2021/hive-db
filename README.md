@@ -9,39 +9,45 @@
 ## Setup Environment
 
 - We provide public APIs via the endpoint *http://sochaindb.com*,  currently authenticated by the key *"TOKEN"* with the value *"WrrXP6szu06wlLQVfAM3b0FD8i4612zc"* in the Request Header.
-- The APIs could be requested by [httpie tool](https://httpie.io/). Depending on your OS, you can quickly install this tool by a command line.
+- The APIs could be requested by the [httpie tool](https://httpie.io/). Depending on your OS, you can quickly install this tool by a command line.
 
-On Linux: `apt install httpie`
-License
+On Linux:
+    `apt install httpie`
 
-## Parameters usage and Examples of the API Calls
+On Window:
+    `choco install httpie`
 
-- We will separate the api to three target:
-  1. **Blocks**: get the blocks from hive chain which get all of transactions of hive blockchain blocks.
+On macOS:
+    `brew install httpie`
+
+## Parameters Usage
+
+- We will separate the APIs into three targets:
+  1. **Blocks**: get the blocks from the Hive blockchain, which gets all of the transactions of blocks.
   2. **Posts**: get the posts we filtered from the transactions of the blocks.
   3. **Comments**: get the comments we filtered from the transactions of the blocks.
 
-- The current version APIs would serve data from Hive from **March 27th** to **December 6th**
+- The current version APIs would serve data of Hive mainnet from **March 27th, 2020** to **December 6th, 2021**. The duration is after [Steem Hard Fork](https://www.coindesk.com/steem-hard-fork-hive).
 
-- The following parameters in bellow table will help the request more specific. Let's go over come them and try each one as well.
-
+- The following parameters in bellow table will help the request be more specific.
 
 | Parameter | Description | Default | Accepted Values | blocks | posts | comments | statistic |
 |---|--------|---|---|---|---|---|---|
 | size | Limit results of the request. A data sample might be large, especiallythe block samples. Users can set size for reducing runtime. | 25 | Interger |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |
 | fields | Get fields in the schema. Not all fields would be useful, and it dependson individuals’ purposes. Users can add a list of fields for reducing runtime. | "*" | List of strings |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |
-| witnesses | Filter data by "witnesses", sometimes is important information for analyzing. | None | List of strings |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |
+| witness | Filter data by "witness." It sometimes is essential information for analyzing. | None | List of strings |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |
 | ids | Filter data by the IDs of identified blocks. | None | List of strings |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |
 | block_ids | Filter data by the hash of blocks which is similar to IDs, however, this isused to reference each other blocks in the database. | None | List of strings |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |
 | operations | Filter by type of operations of the transactions in the blocks. | None | List of strings |  :heavy_check_mark: | - | - | - |
-| after | Filter data after the time. The available begin time in our databaseis at 16:40:09 UTC on 27th March 2020 for the early version. | None | UTC format or timestamp |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: | - |
-| before | Filter data before the time. The available last time in our databaseis at 23:59:59 UTC on 31st May 2021 for the early version. | None | UTC format or timestamp |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: | - |
+| after | Filter data after the time. The available begin time in our databaseis at 16:40:09 UTC on March 27th, 2020 for the early version. | None | UTC format or timestamp |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: | - |
+| before | Filter data before the time. The available last time in our databaseis at 17:01:15 UTC on December 6th, 2021 for the early version. | None | UTC format or timestamp |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: | - |
 | authors | Filter by the authors. If users are interested in some posts or comments,they can add a list of authors to search for more actions. | None | List of strings | - |  :heavy_check_mark: |  :heavy_check_mark: | - |
 | permlink | Filter by "permlink" being a partition of posts or comments’ URL on Hivesocial network. Users can add a list of "permlinks" for reducing runtime. | None | List of strings | - |  :heavy_check_mark: |  :heavy_check_mark: | - |
 | post_permlinks | Filter the comments in the posts having the "permlinks". | None | List of strings | - | - |  :heavy_check_mark: | - |
 | words | Filter the posts or comments which contain the input words.This would help users catch some social network trends by searchingthe hot trending words. | None | List of strings | - |  :heavy_check_mark: |  :heavy_check_mark: | - |
 | tags | Filter the posts which have the hashtags. This might help users search theposts more accurately than the words parameter. | None | List of strings | - |  :heavy_check_mark: | - | - |
 
+## Examples of the API Calls
 
 ### Block APIs
 
@@ -50,7 +56,7 @@ License
 http GET "sochaindb.com/hive-api/v1.0.0/blocks?size=3" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
 ``` -->
 
-GET: return specific fields
+GET: blocks with specific fields
 ```
 http GET "sochaindb.com/hive-api/v1.0.0/blocks?size=3&fields=signing_key,transaction_ids,id,block_id,witness" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
 ```
@@ -178,9 +184,7 @@ http GET "sochaindb.com/hive-api/v1.0.0/posts?size=3&fields=signing_key,transact
 
 ### Statistics APIs
 
-We also provide some APIs for statistics
-You can add **size** parameter on requests to limit the amount of items.
-We limit the 10000 items as default.
+We also provide some APIs for statistics. You can modify size parameters on requests to limit the number of items. We limit the 10000 items as a default.
 
 GET: the list of top users based on the number of posts.
 ```
@@ -196,6 +200,10 @@ GET: the list of contents of top posts.
 ```
 http GET "sochaindb.com/hive-api/v1.0.0/top_words?size=1000" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
 ```
+
+## Appendix
+
+You can get operation types from this [list](https://github.com/SOCHAINDB/hive-db/blob/master/assets/summary.org).
 
 # Run a local service
 
@@ -216,19 +224,14 @@ docker run -it --rm -p 5000:5000 nguyenminh1807/hive-api:v1.0
 
 # LICENSE
 
+Shield: [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![CC BY-SA 4.0][cc-by-sa-shield]][cc-by-sa]
+
 The source code for the data service is licensed under the [MIT License](https://github.com/SOCHAINDB/hive-db/blob/master/LICENSE).
 
-Shield: [![CC BY-SA 4.0][cc-by-sa-shield]][cc-by-sa]
-
 The dataset is licensed under the
-[Creative Commons Attribution-ShareAlike 4.0 International License][cc-by-sa].
-
-[![CC BY-SA 4.0][cc-by-sa-image]][cc-by-sa]
+[Creative Commons Attribution-ShareAlike 4.0 International License](https://github.com/SOCHAINDB/hive-db/blob/master/LICENSE-CC-BY-SA).
 
 [cc-by-sa]: http://creativecommons.org/licenses/by-sa/4.0/
 [cc-by-sa-image]: https://licensebuttons.net/l/by-sa/4.0/88x31.png
 [cc-by-sa-shield]: https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg
 
-# Appendix
-
-You can get operation type from this [list](https://github.com/SOCHAINDB/hive-db/blob/master/assets/summary.org).
