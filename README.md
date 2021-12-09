@@ -14,17 +14,16 @@
 On Linux: `apt install httpie`
 License
 
-## Parameters usage and Examples of the API Calls
+## Parameters Usage
 
-- We will separate the api to three target:
-  1. **Blocks**: get the blocks from hive chain which get all of transactions of hive blockchain blocks.
+- We will separate the APIs into three targets:
+  1. **Blocks**: get the blocks from the Hive blockchain, which gets all of the transactions of hive blockchain blocks.
   2. **Posts**: get the posts we filtered from the transactions of the blocks.
   3. **Comments**: get the comments we filtered from the transactions of the blocks.
 
-- The current version APIs would serve data from Hive from **March 27th** to **December 6th**
+- The current version APIs would serve data of Hive mainnet from **March 27th, 2020** to **December 6th, 2021**. The duration is after [Steem Hard Fork](https://www.coindesk.com/steem-hard-fork-hive).
 
-- The following parameters in bellow table will help the request more specific. Let's go over come them and try each one as well.
-
+- The following parameters in bellow table will help the request be more specific.
 
 | Parameter | Description | Default | Accepted Values | blocks | posts | comments | statistic |
 |---|--------|---|---|---|---|---|---|
@@ -42,6 +41,7 @@ License
 | words | Filter the posts or comments which contain the input words.This would help users catch some social network trends by searchingthe hot trending words. | None | List of strings | - |  :heavy_check_mark: |  :heavy_check_mark: | - |
 | tags | Filter the posts which have the hashtags. This might help users search theposts more accurately than the words parameter. | None | List of strings | - |  :heavy_check_mark: | - | - |
 
+## Examples of the API Calls
 
 ### Block APIs
 
@@ -50,7 +50,7 @@ License
 http GET "sochaindb.com/hive-api/v1.0.0/blocks?size=3" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
 ``` -->
 
-GET: return specific fields
+GET: blocks with specific fields
 ```
 http GET "sochaindb.com/hive-api/v1.0.0/blocks?size=3&fields=signing_key,transaction_ids,id,block_id,witness" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
 ```
@@ -178,9 +178,7 @@ http GET "sochaindb.com/hive-api/v1.0.0/posts?size=3&fields=signing_key,transact
 
 ### Statistics APIs
 
-We also provide some APIs for statistics
-You can add **size** parameter on requests to limit the amount of items.
-We limit the 10000 items as default.
+We also provide some APIs for statistics. You can modify size parameters on requests to limit the number of items. We limit the 10000 items as a default.
 
 GET: the list of top users based on the number of posts.
 ```
