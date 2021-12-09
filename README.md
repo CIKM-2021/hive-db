@@ -27,7 +27,7 @@ License
 
 
 | Parameter | Description | Default | Accepted Values | blocks | posts | comments | statistic |
-|---|---|---|---|---|---|---|---|
+|---|--------|---|---|---|---|---|---|
 | size | Limit results of the request. A data sample might be large, especiallythe block samples. Users can set size for reducing runtime. | 25 | Interger |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |
 | fields | Get fields in the schema. Not all fields would be useful, and it dependson individuals’ purposes. Users can add a list of fields for reducing runtime. | "*" | List of strings |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |
 | witnesses | Filter data by "witnesses", sometimes is important information for analyzing. | None | List of strings |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |
