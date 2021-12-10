@@ -61,7 +61,7 @@ On macOS:
 ### Block APIs
 
 
-GET: blocks with specific fields. You can get list of supported fields in this [list](https://github.com/SOCHAINDB/hive-db/blob/master/assets/fields.md).
+GET: blocks with specific fields. You can get the list of supported fields in this [list](https://github.com/SOCHAINDB/hive-db/blob/master/assets/fields.md).
 ```
 http GET "sochaindb.com/hive-api/v1.0.0/blocks?size=3&fiselds=signing_key,transaction_ids,id,block_id,operations.value.author,operations.value.expiration,operations.value.parent_permlink,operations.value.body" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
 ```
