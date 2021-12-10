@@ -3,8 +3,9 @@
 - [x] block_id
 - [x] id
 - [x] previous
-- [x] timestamp
 - [x] signing_key
+- [x] timestamp
+- [x] transaction_ids
 - [x] witness
 - [x] witness_signature
 - [ ] operations
