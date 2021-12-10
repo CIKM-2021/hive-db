@@ -1,11 +1,20 @@
+<br/>
+<p align="center">
+    <a href="http://sochaindb.com" target="blank_">
+        <img  height="100" alt="HTTPie" src="./assets/cover.png" />
+    </a>
+ </p>
+<br/>
+
+<p align="center">
+    <a href="https://www.python.org/" target="blank_"><img alt="python" src="https://img.shields.io/badge/python-3.6.15-green" /></a>
+    <a href="https://img.shields.io/badge/falcon-3.0.1-yellowgreen" target="blank_"><img alt="falcon" src="https://img.shields.io/badge/falcon-3.0.1-yellowgreen" /></a>
+    <a href="https://cloud.google.com/bigquery/" target="blank_"><img alt="bigquery" src="https://img.shields.io/badge/python-3.6.15-green" /></a>
+    <a href="https://opensource.org/licenses/MIT" target="blank_"><img alt="mit" src="https://img.shields.io/badge/License-MIT-blue.svg" /></a>
+    <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="blank_"><img alt="cc-by-sa" src="https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg" /></a>
+</p>
+
 # HIVE Data service
-[![python](https://img.shields.io/badge/python-3.6.15-green)](https://www.python.org/)
-[![slither](https://img.shields.io/badge/falcon-3.0.1-yellowgreen)](https://falcon.readthedocs.io/en/stable/)
-[![bigquery](https://img.shields.io/badge/google--cloud--bigquery-2.15.0-red)](https://cloud.google.com/bigquery/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![License: CC BY-SA 4.0][cc-by-sa-shield]](https://creativecommons.org/licenses/by-sa/4.0/)
-
-
 ## Setup Environment
 
 - We provide public APIs via the endpoint *http://sochaindb.com*,  currently authenticated by the key *"TOKEN"* with the value *"WrrXP6szu06wlLQVfAM3b0FD8i4612zc"* in the Request Header.
@@ -31,7 +40,8 @@ On macOS:
 
 - The following parameters in bellow table will help the request be more specific.
 
-| Parameter | Description | Default | Accepted Values | blocks | posts | comments | statistic |
+| Parameter | 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Description&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Default | Accepted Values | blocks | posts | comments | statistic |
 |---|--------|---|---|---|---|---|---|
 | size | Limit results of the request. A data sample might be large, especiallythe block samples. Users can set size for reducing runtime. | 25 | Interger |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |
 | fields | Get fields in the schema. Not all fields would be useful, and it dependson individuals’ purposes. Users can add a list of fields for reducing runtime. | "*" | List of strings |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |
@@ -53,49 +63,49 @@ On macOS:
 
 <!-- GET: number of block (default 25)
 ```
-http GET "sochaindb.com/hive-api/v1.0.0/blocks?size=3" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
+http GET "sochaindb.com/hive-api/v1.0.0/blocks?size=3" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
 ``` -->
 
 GET: blocks with specific fields
 ```
-http GET "sochaindb.com/hive-api/v1.0.0/blocks?size=3&fields=signing_key,transaction_ids,id,block_id,witness" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
+http GET "sochaindb.com/hive-api/v1.0.0/blocks?size=3&fields=signing_key,transaction_ids,id,block_id,witness" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
 ```
 
 GET: blocks by witnesses
 ```
-http GET "sochaindb.com/hive-api/v1.0.0/blocks?size=5&fields=signing_key,transaction_ids,id,block_id,witness&witnesses=ausbitbank,pharesim,anyx" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
+http GET "sochaindb.com/hive-api/v1.0.0/blocks?size=5&fields=signing_key,transaction_ids,id,block_id,witness&witnesses=ausbitbank,pharesim,anyx" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
 ```
 
 GET: blocks by ids
 ```
-http GET "sochaindb.com/hive-api/v1.0.0/blocks?size=3&fields=signing_key,transaction_ids,id,block_id,witness&ids=51314015,51314016" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
+http GET "sochaindb.com/hive-api/v1.0.0/blocks?size=3&fields=signing_key,transaction_ids,id,block_id,witness&ids=51314015,51314016" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
 ```
 
 GET: blocks by block_ids
 ```
-http GET "sochaindb.com/hive-api/v1.0.0/blocks?size=3&fields=signing_key,transaction_ids,id,block_id,witness&block_ids=030efd5fe57e5fa7104b1186d7df6f00b39d3777,030efd60d0fbf6cca241f8be3577d3f680819c75" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
+http GET "sochaindb.com/hive-api/v1.0.0/blocks?size=3&fields=signing_key,transaction_ids,id,block_id,witness&block_ids=030efd5fe57e5fa7104b1186d7df6f00b39d3777,030efd60d0fbf6cca241f8be3577d3f680819c75" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
 ```
 
 GET: blocks by operations
 ```
-http GET "sochaindb.com/hive-api/v1.0.0/blocks?size=3&fields=signing_key,transaction_ids,id,block_id,witness&operations=comment_operation,comment_options_operation,vote_operation" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
+http GET "sochaindb.com/hive-api/v1.0.0/blocks?size=3&fields=signing_key,transaction_ids,id,block_id,witness&operations=comment_operation,comment_options_operation,vote_operation" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
 ```
 
 **GET block by time can use both of UTC format and timestamp.**
 
 GET: blocks since begin_time to end_time
 ```
-http GET "sochaindb.com/hive-api/v1.0.0/blocks?size=3&fields=signing_key,transaction_ids,id,block_id,witness&before=2021-02-14T04:40:15&after=2021-02-14T04:40:12" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
+http GET "sochaindb.com/hive-api/v1.0.0/blocks?size=3&fields=signing_key,transaction_ids,id,block_id,witness&before=2021-02-14T04:40:15&after=2021-02-14T04:40:12" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
 ```
 
 GET: blocks after a specific date
 ```
-http GET "sochaindb.com/hive-api/v1.0.0/blocks?size=3&fields=signing_key,transaction_ids,id,block_id,witness&after=2021-02-14T04:40:15" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
+http GET "sochaindb.com/hive-api/v1.0.0/blocks?size=3&fields=signing_key,transaction_ids,id,block_id,witness&after=2021-02-14T04:40:15" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
 ```
 
 GET: blocks before a specific date
 ```
-http GET "sochaindb.com/hive-api/v1.0.0/blocks?size=3&fields=signing_key,transaction_ids,id,block_id,witness&before=1620171391" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
+http GET "sochaindb.com/hive-api/v1.0.0/blocks?size=3&fields=signing_key,transaction_ids,id,block_id,witness&before=1620171391" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
 ```
 
 
@@ -103,83 +113,83 @@ http GET "sochaindb.com/hive-api/v1.0.0/blocks?size=3&fields=signing_key,transac
 
 <!-- GET: number of comments (default 25)
 ```
-http GET "sochaindb.com/hive-api/v1.0.0/comments?size=3" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
+http GET "sochaindb.com/hive-api/v1.0.0/comments?size=3" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
 ``` -->
 
 GET: comment by witnesses
 ```
-http GET "sochaindb.com/hive-api/v1.0.0/comments?size=3&fields=signing_key,transaction_ids,id,block_id,witness&witnesses=ausbitbank,pharesim,anyx" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
+http GET "sochaindb.com/hive-api/v1.0.0/comments?size=3&fields=signing_key,transaction_ids,id,block_id,witness&witnesses=ausbitbank,pharesim,anyx" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
 ```
 
 GET: comment by the authors
 ```
-http GET "sochaindb.com/hive-api/v1.0.0/comments?size=3&fields=signing_key,transaction_ids,id,block_id,witness&authors=wilhb81,pl-travelfeed" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
+http GET "sochaindb.com/hive-api/v1.0.0/comments?size=3&fields=signing_key,transaction_ids,id,block_id,witness&authors=wilhb81,pl-travelfeed" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
 ```
 
 GET: comments contain words
 ```
-http GET "sochaindb.com/hive-api/v1.0.0/comments?size=3&fields=signing_key,transaction_ids,id,block_id,witness&search=dish,aktywnym" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
+http GET "sochaindb.com/hive-api/v1.0.0/comments?size=3&fields=signing_key,transaction_ids,id,block_id,witness&search=dish,aktywnym" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
 ```
 
 GET: comments by permlink
 ```
-http GET "sochaindb.com/hive-api/v1.0.0/comments?size=3&fields=signing_key,transaction_ids,id,block_id,witness&permlinks=re-ptaku-qoi4z7,qoi4z2" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
+http GET "sochaindb.com/hive-api/v1.0.0/comments?size=3&fields=signing_key,transaction_ids,id,block_id,witness&permlinks=re-ptaku-qoi4z7,qoi4z2" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
 ```
 
 **GET comments by time can use both of UTC format and timestamp.**
 
 GET: comments since begin_time to end_time
 ```
-http GET "sochaindb.com/hive-api/v1.0.0/comments?size=3&fields=signing_key,transaction_ids,id,block_id,witness&before=2021-02-14T04:40:15&after=2021-02-14T04:40:12" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
+http GET "sochaindb.com/hive-api/v1.0.0/comments?size=3&fields=signing_key,transaction_ids,id,block_id,witness&before=2021-02-14T04:40:15&after=2021-02-14T04:40:12" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
 ```
 
 GET: comments after a specific date
 ```
-http GET "sochaindb.com/hive-api/v1.0.0/comments?size=3&fields=signing_key,transaction_ids,id,block_id,witness&after=2021-02-14T04:40:15" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
+http GET "sochaindb.com/hive-api/v1.0.0/comments?size=3&fields=signing_key,transaction_ids,id,block_id,witness&after=2021-02-14T04:40:15" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
 ```
 
 GET: comments before a specific date
 ```
-http GET "sochaindb.com/hive-api/v1.0.0/comments?size=3&fields=signing_key,transaction_ids,id,block_id,witness&before=1620171391" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
+http GET "sochaindb.com/hive-api/v1.0.0/comments?size=3&fields=signing_key,transaction_ids,id,block_id,witness&before=1620171391" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
 ```
 
 ### Post APIs
 
 <!-- GET: number of posts (default 25)
 ```
-http GET "sochaindb.com/hive-api/v1.0.0/posts?size=3" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
+http GET "sochaindb.com/hive-api/v1.0.0/posts?size=3" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
 ``` -->
 
 GET: posts by the authors
 ```
-http GET "sochaindb.com/hive-api/v1.0.0/posts?size=3&fields=signing_key,transaction_ids,id,block_id,witness&authors=wilhb81,pl-travelfeed" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
+http GET "sochaindb.com/hive-api/v1.0.0/posts?size=3&fields=signing_key,transaction_ids,id,block_id,witness&authors=wilhb81,pl-travelfeed" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
 ```
 
 GET: posts contain words
 ```
-http GET "sochaindb.com/hive-api/v1.0.0/posts?size=3&fields=signing_key,transaction_ids,id,block_id,witness&search=covid" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
+http GET "sochaindb.com/hive-api/v1.0.0/posts?size=3&fields=signing_key,transaction_ids,id,block_id,witness&search=covid" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
 ```
 
 GET: posts by permlink
 ```
-http GET "sochaindb.com/hive-api/v1.0.0/posts?size=3&fields=signing_key,transaction_ids,id,block_id,witness&permlinks=covid-drove-us-into-digitization-and-crypto-or-freewrite-weekend-16-05-21,qoi4z2" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
+http GET "sochaindb.com/hive-api/v1.0.0/posts?size=3&fields=signing_key,transaction_ids,id,block_id,witness&permlinks=covid-drove-us-into-digitization-and-crypto-or-freewrite-weekend-16-05-21,qoi4z2" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
 ```
 
 **GET posts by time can use both of UTC format and timestamp.**
 
 GET: posts since begin_time to end_time
 ```
-http GET "sochaindb.com/hive-api/v1.0.0/posts?size=3&fields=signing_key,transaction_ids,id,block_id,witness&before=2021-05-24T04:40:15&after=2021-02-14T04:40:12" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
+http GET "sochaindb.com/hive-api/v1.0.0/posts?size=3&fields=signing_key,transaction_ids,id,block_id,witness&before=2021-05-24T04:40:15&after=2021-02-14T04:40:12" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
 ```
 
 GET: posts after a specific date
 ```
-http GET "sochaindb.com/hive-api/v1.0.0/posts?size=3&fields=signing_key,transaction_ids,id,block_id,witness&after=2021-02-14T04:40:15" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
+http GET "sochaindb.com/hive-api/v1.0.0/posts?size=3&fields=signing_key,transaction_ids,id,block_id,witness&after=2021-02-14T04:40:15" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
 ```
 
 GET: posts before a specific date
 ```
-http GET "sochaindb.com/hive-api/v1.0.0/posts?size=3&fields=signing_key,transaction_ids,id,block_id,witness&before=1620171391" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
+http GET "sochaindb.com/hive-api/v1.0.0/posts?size=3&fields=signing_key,transaction_ids,id,block_id,witness&before=1620171391" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
 ```
 
 ### Statistics APIs
@@ -188,17 +198,17 @@ We also provide some APIs for statistics. You can modify size parameters on requ
 
 GET: the list of top users based on the number of posts.
 ```
-http GET "sochaindb.com/hive-api/v1.0.0/top_posts?size=1000" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
+http GET "sochaindb.com/hive-api/v1.0.0/top_posts?size=1000" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
 ```
 
 GET: the list of top users based on the number of comments.
 ```
-http GET "sochaindb.com/hive-api/v1.0.0/top_comments?size=1000" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
+http GET "sochaindb.com/hive-api/v1.0.0/top_comments?size=1000" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
 ```
 
 GET: the list of contents of top posts.
 ```
-http GET "sochaindb.com/hive-api/v1.0.0/top_words?size=1000" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc
+http GET "sochaindb.com/hive-api/v1.0.0/top_words?size=1000" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
 ```
 
 ## Appendix
