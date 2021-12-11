@@ -18,6 +18,7 @@
 ## Setup Environment
 
 - We provide public APIs via the endpoint *http://sochaindb.com*,  currently authenticated by the key *"TOKEN"* with the value *"WrrXP6szu06wlLQVfAM3b0FD8i4612zc"* in the Request Header.
+- Some request might take a long period, let's set a high timeout in request to ensure the connection can not be broken.
 - The APIs could be requested by the [httpie tool](https://httpie.io/). Depending on your OS, you can quickly install this tool by a command line.
 
 On Linux:
@@ -63,7 +64,7 @@ On macOS:
 
 GET: blocks with specific fields. You can get the list of supported fields in this [list](https://github.com/SOCHAINDB/hive-db/blob/master/assets/fields.md).
 ```
-http GET "sochaindb.com/hive-api/v1.0.0/blocks?size=3&fiselds=signing_key,transaction_ids,id,block_id,operations.value.author,operations.value.expiration,operations.value.parent_permlink,operations.value.body" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
+http GET "sochaindb.com/hive-api/v1.0.0/blocks?size=3&fields=signing_key,transaction_ids,id,block_id,operations.value.author,operations.value.expiration,operations.value.parent_permlink,operations.value.body" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
 ```
 
 GET: blocks by witnesses
@@ -200,8 +201,8 @@ http GET "sochaindb.com/hive-api/v1.0.0/top_words?size=1000" TOKEN:WrrXP6szu06wl
 
 ## Appendix
 
-- You can get operation types from this [list](https://github.com/SOCHAINDB/hive-db/blob/master/assets/summary.org).
-- [List of supported fields](https://github.com/SOCHAINDB/hive-db/blob/master/assets/fields.md).
+- You can get the list of supported fields of the APIs [here](https://github.com/SOCHAINDB/hive-db/blob/master/assets/fields.md).
+- You can get the list of operation types of the APIs [here](https://github.com/CIKM-2021/hive-db/blob/master/assets/summary.org).
 
 
 # Run a local service
