@@ -18,7 +18,7 @@
 ## Setup Environment
 
 - We provide public APIs via the endpoint *http://sochaindb.com*,  currently authenticated by the key *"TOKEN"* with the value *"WrrXP6szu06wlLQVfAM3b0FD8i4612zc"* in the Request Header.
-- Some request might take a long period. If request break down, let try to set a high timeout.
+- Some requests might take a long period. If requests break down, let's try to set a high timeout.
 - The APIs could be requested by the [httpie tool](https://httpie.io/). Depending on your OS, you can quickly install this tool by a command line.
 
 On Linux:
