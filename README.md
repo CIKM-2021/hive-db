@@ -203,6 +203,7 @@ http GET "sochaindb.com/hive-api/v1.0.0/top_words?size=1000" TOKEN:WrrXP6szu06wl
 
 - You can get the list of supported fields of the APIs [here](https://github.com/SOCHAINDB/hive-db/blob/master/assets/fields.md).
 - You can get the list of operation types of the APIs [here](https://github.com/CIKM-2021/hive-db/blob/master/assets/summary.org).
+- You can see the bigquery SQL examples [here](https://github.com/SOCHAINDB/hive-db/blob/master/assets/queries.md)
 
 
 # Run a local service
