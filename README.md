@@ -9,7 +9,7 @@
 <p align="center">
     <a href="https://www.python.org/" target="blank_"><img alt="python" src="https://img.shields.io/badge/python-3.6.15-green" /></a>
     <a href="https://img.shields.io/badge/falcon-3.0.1-yellowgreen" target="blank_"><img alt="falcon" src="https://img.shields.io/badge/falcon-3.0.1-yellowgreen" /></a>
-    <a href="https://cloud.google.com/bigquery/" target="blank_"><img alt="bigquery" src="https://img.shields.io/badge/python-3.6.15-green" /></a>
+    <a href="https://cloud.google.com/bigquery/" target="blank_"><img alt="bigquery" src="https://img.shields.io/badge/google--cloud--bigquery-2.15.0-red" /></a>
     <a href="https://opensource.org/licenses/MIT" target="blank_"><img alt="mit" src="https://img.shields.io/badge/License-MIT-blue.svg" /></a>
     <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="blank_"><img alt="cc-by-sa" src="https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg" /></a>
 </p>
