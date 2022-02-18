@@ -36,14 +36,14 @@ class TopPostView(BaseResource):
         credentials = get_credentials()
         client = bigquery.Client(credentials=credentials, project=credentials.project_id)
         query_template = """
-                SELECT count(operations_unnest.value.author) as amount, operations_unnest.value.author
+                SELECT count(operations.value.author) as amount, operations.value.author
                 FROM `steemit-307308.{dataset}.{table}`,
-                    UNNEST (transactions) AS transaction_unnest,
-                    UNNEST (transaction_unnest.operations) AS operations_unnest
+                    UNNEST (transactions) AS transactions,
+                    UNNEST (transactions.operations) AS operations
                 WHERE 
-                    _TABLE_SUFFIX BETWEEN '42000000_43245905_01' AND '53950540_54433707_48'
-                    AND operations_unnest.value.title != ""
-                GROUP BY operations_unnest.value.author
+                    _TABLE_SUFFIX BETWEEN '42000001_43245905_01' AND '59567347_59805327_48'
+                    AND operations.value.title != ""
+                GROUP BY operations.value.author
                 ORDER BY amount desc
                 LIMIT @limit
             """.format(dataset=self.dataset, table=self.table)
@@ -78,14 +78,14 @@ class TopCommentView(BaseResource):
         credentials = get_credentials()
         client = bigquery.Client(credentials=credentials, project=credentials.project_id)
         query_template = """
-                SELECT count(operations_unnest.value.author) as amount, operations_unnest.value.author
+                SELECT count(operations.value.author) as amount, operations.value.author
                 FROM `steemit-307308.{dataset}.{table}`,
-                    UNNEST (transactions) AS transaction_unnest,
-                    UNNEST (transaction_unnest.operations) AS operations_unnest
+                    UNNEST (transactions) AS transactions,
+                    UNNEST (transactions.operations) AS operations
                 WHERE 
-                    _TABLE_SUFFIX BETWEEN '42000000_43245905_01' AND '53950540_54433707_48'
-                    AND operations_unnest.value.title = ""
-                GROUP BY operations_unnest.value.author
+                    _TABLE_SUFFIX BETWEEN '42000001_43245905_01' AND '59567347_59805327_48'
+                    AND operations.value.title = ""
+                GROUP BY operations.value.author
                 ORDER BY amount desc
                 LIMIT @limit
             """.format(dataset=self.dataset, table=self.table)
@@ -120,13 +120,13 @@ class TopWordView(BaseResource):
         credentials = get_credentials()
         client = bigquery.Client(credentials=credentials, project=credentials.project_id)
         query_template = """
-                SELECT operations_unnest.value.body
+                SELECT operations.value.body
                 FROM `steemit-307308.{dataset}.{table}`,
-                    UNNEST (transactions) AS transaction_unnest,
-                    UNNEST (transaction_unnest.operations) AS operations_unnest
+                    UNNEST (transactions) AS transactions,
+                    UNNEST (transactions.operations) AS operations
                 WHERE 
-                    _TABLE_SUFFIX BETWEEN '42000000_43245905_01' AND '53950540_54433707_48'
-                    AND operations_unnest.value.title IS NOT NULL
+                    _TABLE_SUFFIX BETWEEN '42000001_43245905_01' AND '59567347_59805327_48'
+                    AND operations.value.title != ""
                 LIMIT @limit
             """.format(dataset=self.dataset, table=self.table)
         job_config = bigquery.QueryJobConfig(

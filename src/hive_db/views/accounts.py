@@ -18,8 +18,7 @@ class TestResourceView(BaseResource):
     def on_get(self, req, resp):
         q = req.get_param('q')
         logger.info('param in query {}', q)
-        # self.ok(resp, {'message': f'here on get {q}'})
-        resp.text = f'here on get {q}'
+        self.ok(resp, {'message': f'Message from test api {q}'})
 
 
 class AccountView(BaseResource):

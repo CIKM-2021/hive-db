@@ -1,0 +1,33 @@
+## List of fields can get from APIs.
+
+- [x] block_id
+- [x] id
+- [x] previous
+- [x] signing_key
+- [x] timestamp
+- [x] transaction_ids
+- [x] witness
+- [x] witness_signature
+- [ ] operations
+  - [ ] value
+    - [x] operations.value.account
+    - [x] operations.value.amount
+    - [x] operations.value.allow_curation_rewards
+    - [x] operations.value.allow_votes
+    - [x] operations.value.author
+    - [x] operations.value.body
+    - [x] operations.value.expiration
+    - [x] operations.value.fee
+    - [x] operations.value.id
+    - [x] operations.value.json_str
+    - [x] operations.value.memo
+    - [x] operations.value.memo_key
+    - [x] operations.value.parent_author
+    - [x] operations.value.parent_permlink
+    - [x] operations.value.reward_hbd
+    - [x] operations.value.reward_hive
+    - [x] operations.value.reward_vests
+    - [x] operations.value.title
+    - [x] operations.value.voter
+    - [x] operations.value.weight
+    - [x] operations.value.witness
