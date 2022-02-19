@@ -33,9 +33,9 @@ On macOS:
 ## Parameters Usage
 
 - We will separate the APIs into three targets:
-  1. **Blocks**: get the blocks from the Hive blockchain, which gets all of the transactions of blocks.
-  2. **Posts**: get the posts we filtered from the transactions of the blocks.
-  3. **Comments**: get the comments we filtered from the transactions of the blocks.
+  1. **Posts**: get the posts we filtered from the transactions of the blocks.
+  2. **Comments**: get the comments we filtered from the transactions of the blocks.
+  3. **Blocks**: get the blocks from the Hive blockchain, which gets all of the transactions of blocks.
 
 - The current version APIs would serve data of Hive mainnet from **March 27th, 2020** to **December 6th, 2021**. The duration is after [Steem Hard Fork](https://www.coindesk.com/steem-hard-fork-hive).
 
