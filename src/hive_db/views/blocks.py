@@ -20,6 +20,8 @@ class BlockView(BaseResource):
         super().__init__()
         self.dataset = 'hive_zurich'
         self.table = settings.TABLES
+        self.first_block = settings.FIRST_BLOCK
+        self.end_block = settings.END_BLOCK
 
     def on_get(self, req, resp):
         # init client
@@ -39,7 +41,7 @@ class BlockView(BaseResource):
         if fields is not None:
             columns = fields
         else:
-            columns = '*'
+            columns = settings.SUPPORTED_FIELDS
         if size is None:
             size = 25
         if witnesses:
@@ -67,14 +69,16 @@ class BlockView(BaseResource):
         if witnesses:
             query_template = """
                 SELECT {columns}
-                FROM `steemit-307308.{dataset}.{table}`
+                FROM `steemit-307308.{dataset}.{table}`,
+                    UNNEST (transactions) AS transactions,
+                    UNNEST (transactions.operations) AS operations
                 WHERE 
-                    _TABLE_SUFFIX BETWEEN '42000001_43245905_01' AND '53950540_54433707_48'
+                    _TABLE_SUFFIX BETWEEN {first_block} AND {end_block}
                     AND witness IN UNNEST(@witnesses)
                 LIMIT @limit
-            """.format(columns=columns, dataset=self.dataset, table=self.table)
+            """.format(columns=columns, dataset=self.dataset, table=self.table, first_block=self.first_block, end_block=self.end_block)
             job_config = bigquery.QueryJobConfig(
-                query_parameter =[
+                query_parameters =[
                     bigquery.ArrayQueryParameter("witnesses", "STRING", witnesses),
                     bigquery.ScalarQueryParameter('limit', 'INT64', size),
                 ]
@@ -82,12 +86,14 @@ class BlockView(BaseResource):
         elif ids:
             query_template = """
                 SELECT {columns}
-                FROM `steemit-307308.{dataset}.{table}`
+                FROM `steemit-307308.{dataset}.{table}`,
+                    UNNEST (transactions) AS transactions,
+                    UNNEST (transactions.operations) AS operations
                 WHERE 
-                    _TABLE_SUFFIX BETWEEN '42000001_43245905_01' AND '53950540_54433707_48'
+                    _TABLE_SUFFIX BETWEEN {first_block} AND {end_block}
                     AND id IN UNNEST(@ids)
                 LIMIT @limit
-            """.format(columns=columns, dataset=self.dataset, table=self.table)
+            """.format(columns=columns, dataset=self.dataset, table=self.table, first_block=self.first_block, end_block=self.end_block)
             job_config = bigquery.QueryJobConfig(
                 query_parameters=[
                     bigquery.ArrayQueryParameter("ids", "INT64", ids),
@@ -97,12 +103,14 @@ class BlockView(BaseResource):
         elif block_ids:
             query_template = """
                 SELECT {columns}
-                FROM `steemit-307308.{dataset}.{table}`
+                FROM `steemit-307308.{dataset}.{table}`,
+                    UNNEST (transactions) AS transactions,
+                    UNNEST (transactions.operations) AS operations
                 WHERE 
-                    _TABLE_SUFFIX BETWEEN '42000001_43245905_01' AND '53950540_54433707_48'
+                    _TABLE_SUFFIX BETWEEN {first_block} AND {end_block}
                     AND block_id IN UNNEST(@block_ids)
                 LIMIT @limit
-            """.format(columns=columns, dataset=self.dataset, table=self.table)
+            """.format(columns=columns, dataset=self.dataset, table=self.table, first_block=self.first_block, end_block=self.end_block)
             job_config = bigquery.QueryJobConfig(
                 query_parameters=[
                     bigquery.ArrayQueryParameter("block_ids", "STRING", block_ids),
@@ -112,12 +120,14 @@ class BlockView(BaseResource):
         elif after or before:
             query_template = """
                 SELECT {columns}
-                FROM `steemit-307308.{dataset}.{table}`
+                FROM `steemit-307308.{dataset}.{table}`,
+                    UNNEST (transactions) AS transactions,
+                    UNNEST (transactions.operations) AS operations
                 WHERE 
-                    _TABLE_SUFFIX BETWEEN '42000001_43245905_01' AND '53950540_54433707_48'
+                    _TABLE_SUFFIX BETWEEN {first_block} AND {end_block}
                     AND timestamp >= @after AND timestamp <= @before
                 LIMIT @limit
-            """.format(columns=columns, dataset=self.dataset, table=self.table)
+            """.format(columns=columns, dataset=self.dataset, table=self.table, first_block=self.first_block, end_block=self.end_block)
             job_config = bigquery.QueryJobConfig(
                 query_parameters=[
                     bigquery.ScalarQueryParameter("after", "TIMESTAMP", after),
@@ -132,10 +142,10 @@ class BlockView(BaseResource):
                     UNNEST (transactions) AS transactions,
                     UNNEST (transactions.operations) AS operations
                 WHERE 
-                    _TABLE_SUFFIX BETWEEN '42000001_43245905_01' AND '53950540_54433707_48'
+                    _TABLE_SUFFIX BETWEEN {first_block} AND {end_block}
                     AND operations.type IN UNNEST(@operations)
                 LIMIT @limit
-            """.format(columns=columns, dataset=self.dataset, table=self.table)
+            """.format(columns=columns, dataset=self.dataset, table=self.table, first_block=self.first_block, end_block=self.end_block)
             job_config = bigquery.QueryJobConfig(
                 query_parameters=[
                     bigquery.ArrayQueryParameter("operations", "STRING", operations),
@@ -145,11 +155,13 @@ class BlockView(BaseResource):
         else:
             query_template = """
                 SELECT {columns}
-                FROM `steemit-307308.{dataset}.{table}`
+                FROM `steemit-307308.{dataset}.{table}`,
+                    UNNEST (transactions) AS transactions,
+                    UNNEST (transactions.operations) AS operations
                 WHERE 
-                    _TABLE_SUFFIX BETWEEN '42000001_43245905_01' AND '53950540_54433707_48'
+                    _TABLE_SUFFIX BETWEEN {first_block} AND {end_block}
                 LIMIT @limit
-            """.format(columns=columns, dataset=self.dataset, table=self.table)
+            """.format(columns=columns, dataset=self.dataset, table=self.table, first_block=self.first_block, end_block=self.end_block)
             job_config = bigquery.QueryJobConfig(
                 query_parameters=[
                     bigquery.ScalarQueryParameter('limit', 'INT64', size),

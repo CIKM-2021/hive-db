@@ -42,19 +42,19 @@ On macOS:
 
 | Parameter | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Descriptions&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Default | Accepted Values | blocks | posts | comments | statistic |
 |---|--------|---|---|---|---|---|---|
-| size | Limit results of the request. A data sample might be large, especiallythe block samples. Users can set size for reducing runtime. | 25 | Interger |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |
-| fields | Get fields in the schema. Not all fields would be useful, and it dependson individuals’ purposes. Users can add a list of fields for reducing runtime. | "*" | List of strings |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |
-| witnesses | Filter data by "witnesses." It sometimes is essential information for analyzing. | None | List of strings |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |
-| ids | Filter data by the IDs of identified blocks. | None | List of strings |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |
-| block_ids | Filter data by the hash of blocks which is similar to IDs, however, this isused to reference each other blocks in the database. | None | List of strings |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |
-| operations | Filter by type of operations of the transactions in the blocks. | None | List of strings |  :heavy_check_mark: | - | - | - |
-| after | Filter data after the time. The available begin time in our databaseis at 16:40:09 UTC on March 27th, 2020 for the early version. | None | UTC format or timestamp |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: | - |
-| before | Filter data before the time. The available last time in our databaseis at 17:01:15 UTC on December 6th, 2021 for the early version. | None | UTC format or timestamp |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: | - |
-| authors | Filter by the authors. If users are interested in some posts or comments,they can add a list of authors to search for more actions. | None | List of strings | - |  :heavy_check_mark: |  :heavy_check_mark: | - |
-| permlink | Filter by "permlink" being a partition of posts or comments’ URL on Hivesocial network. Users can add a list of "permlinks" for reducing runtime. | None | List of strings | - |  :heavy_check_mark: |  :heavy_check_mark: | - |
-| post_permlinks | Filter the comments in the posts having the "permlinks". | None | List of strings | - | - |  :heavy_check_mark: | - |
-| words | Filter the posts or comments which contain the input words.This would help users catch some social network trends by searchingthe hot trending words. | None | List of strings | - |  :heavy_check_mark: |  :heavy_check_mark: | - |
-| tags | Filter the posts which have the hashtags. This might help users search theposts more accurately than the words parameter. | None | List of strings | - |  :heavy_check_mark: | - | - |
+| size | Limit the results size of a request. A data sample might be large, especially the block samples. Users can set size for reducing runtime. | 25 | Interger |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |
+| [fields](https://github.com/SOCHAINDB/hive-db/blob/master/assets/fields.md) | Get fields in the schema. Not all fields are useful, and it depends on individuals' purposes. Users can add a list of fields for reducing runtime. | "*" | List of strings separated by comma |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |
+| witnesses | Filter data by "witnesses." It sometimes is essential information for analyzing. | None | List of strings separated by comma |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |
+| ids | Filter data by the identified blocks IDs. | None | List of strings separated by comma |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |
+| block_ids | Filter data by the blocks hash, which is similar to IDs, however, this is used to reference each block in the database. | None | List of strings separated by comma |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: |
+| [operations](https://github.com/SOCHAINDB/hive-db/blob/master/assets/summary.org#operation-types) | Filter by the operations type of the transactions in the blocks. | None | List of strings separated by comma |  :heavy_check_mark: | - | - | - |
+| after | Filter data after a specified time. The first available time in our database is at 16:40:09 UTC on 27th March 2020 for the current version. | None | UTC format or timestamp |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: | - |
+| before | Filter data before a specified time. The last available time in our database is at 23:59:57 UTC on January 31st, 2022 for the current version. | None | UTC format or timestamp |  :heavy_check_mark: |  :heavy_check_mark: |  :heavy_check_mark: | - |
+| authors | Filter by the authors. If users are interested in some posts or comments, they can add a list of authors to search for more actions. | None | List of strings separated by comma | - |  :heavy_check_mark: |  :heavy_check_mark: | - |
+| permlinks | Filter by "permlink" being a partition of posts or comments' URL on Hive social network. Users can add a list of "permlinks" for reducing runtime. | None | List of strings separated by comma | - |  :heavy_check_mark: |  :heavy_check_mark: | - |
+| post_permlinks | Filter the comments in the posts having the "permlinks." | None | List of strings separated by comma | - | - |  :heavy_check_mark: | - |
+| words | Filter the posts or comments which contain the specified input words. This could help users catch some social network trends by searching the hot trending words. | None | List of strings separated by comma | - |  :heavy_check_mark: |  :heavy_check_mark: | - |
+| tags | Filter the posts which contain the specified hashtags. This might help users search the posts more accurately than the words parameter. | None | List of strings separated by comma | - |  :heavy_check_mark: | - | - |
 
 ## Examples of the API Calls
 
@@ -63,7 +63,7 @@ On macOS:
 
 GET: blocks with specific fields. You can get list of supported fields in this [list](https://github.com/SOCHAINDB/hive-db/blob/master/assets/fields.md).
 ```
-http GET "sochaindb.com/hive-api/v1.0.0/blocks?size=3&fiselds=signing_key,transaction_ids,id,block_id,operations.value.author,operations.value.expiration,operations.value.parent_permlink,operations.value.body" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
+http GET "sochaindb.com/hive-api/v1.0.0/blocks?size=3&fields=signing_key,transaction_ids,id,block_id,operations.value.author,operations.value.expiration,operations.value.parent_permlink,operations.value.body" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
 ```
 
 GET: blocks by witnesses
@@ -119,7 +119,7 @@ http GET "sochaindb.com/hive-api/v1.0.0/comments?size=3&fields=signing_key,trans
 
 GET: comments contain words
 ```
-http GET "sochaindb.com/hive-api/v1.0.0/comments?size=3&fields=signing_key,transaction_ids,id,block_id,operations.value.author,operations.value.expiration,operations.value.parent_permlink,operations.value.body&search=dish,aktywnym" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
+http GET "sochaindb.com/hive-api/v1.0.0/comments?size=3&fields=signing_key,transaction_ids,id,block_id,operations.value.author,operations.value.expiration,operations.value.parent_permlink,operations.value.body&search=dish,covid" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
 ```
 
 GET: comments by permlink
@@ -200,7 +200,7 @@ http GET "sochaindb.com/hive-api/v1.0.0/top_words?size=1000" TOKEN:WrrXP6szu06wl
 
 ## Appendix
 
-- You can get operation types from this [list](https://github.com/SOCHAINDB/hive-db/blob/master/assets/summary.org).
+- You can get operation types from this [list](https://github.com/SOCHAINDB/hive-db/blob/master/assets/summary.org#operation-types).
 - [List of supported fields](https://github.com/SOCHAINDB/hive-db/blob/master/assets/fields.md).
 
 

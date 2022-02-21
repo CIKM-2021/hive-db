@@ -21,6 +21,8 @@ class TopPostView(BaseResource):
         super().__init__()
         self.dataset = 'hive_zurich'
         self.table = settings.TABLES
+        self.first_block = settings.FIRST_BLOCK
+        self.end_block = settings.END_BLOCK
 
     def on_options(self, req, res):
         res.status = falcon.HTTP_200
@@ -41,12 +43,12 @@ class TopPostView(BaseResource):
                     UNNEST (transactions) AS transactions,
                     UNNEST (transactions.operations) AS operations
                 WHERE 
-                    _TABLE_SUFFIX BETWEEN '42000001_43245905_01' AND '59567347_59805327_48'
+                    _TABLE_SUFFIX BETWEEN {first_block} AND {end_block}
                     AND operations.value.title != ""
                 GROUP BY operations.value.author
                 ORDER BY amount desc
                 LIMIT @limit
-            """.format(dataset=self.dataset, table=self.table)
+            """.format(dataset=self.dataset, table=self.table, first_block=self.first_block, end_block=self.end_block)
         job_config = bigquery.QueryJobConfig(
             query_parameters=[
                 bigquery.ScalarQueryParameter('limit', 'INT64', size),
@@ -63,6 +65,8 @@ class TopCommentView(BaseResource):
         super().__init__()
         self.dataset = 'hive_zurich'
         self.table = settings.TABLES
+        self.first_block = settings.FIRST_BLOCK
+        self.end_block = settings.END_BLOCK
 
     def on_options(self, req, res):
         res.status = falcon.HTTP_200
@@ -83,12 +87,12 @@ class TopCommentView(BaseResource):
                     UNNEST (transactions) AS transactions,
                     UNNEST (transactions.operations) AS operations
                 WHERE 
-                    _TABLE_SUFFIX BETWEEN '42000001_43245905_01' AND '59567347_59805327_48'
+                    _TABLE_SUFFIX BETWEEN {first_block} AND {end_block}
                     AND operations.value.title = ""
                 GROUP BY operations.value.author
                 ORDER BY amount desc
                 LIMIT @limit
-            """.format(dataset=self.dataset, table=self.table)
+            """.format(dataset=self.dataset, table=self.table, first_block=self.first_block, end_block=self.end_block)
         job_config = bigquery.QueryJobConfig(
             query_parameters=[
                 bigquery.ScalarQueryParameter('limit', 'INT64', size),
@@ -105,6 +109,8 @@ class TopWordView(BaseResource):
         super().__init__()
         self.dataset = 'hive_zurich'
         self.table = settings.TABLES
+        self.first_block = settings.FIRST_BLOCK
+        self.end_block = settings.END_BLOCK
 
     def on_options(self, req, res):
         res.status = falcon.HTTP_200
@@ -125,10 +131,10 @@ class TopWordView(BaseResource):
                     UNNEST (transactions) AS transactions,
                     UNNEST (transactions.operations) AS operations
                 WHERE 
-                    _TABLE_SUFFIX BETWEEN '42000001_43245905_01' AND '59567347_59805327_48'
+                    _TABLE_SUFFIX BETWEEN {first_block} AND {end_block}
                     AND operations.value.title != ""
                 LIMIT @limit
-            """.format(dataset=self.dataset, table=self.table)
+            """.format(dataset=self.dataset, table=self.table, first_block=self.first_block, end_block=self.end_block)
         job_config = bigquery.QueryJobConfig(
             query_parameters=[
                 bigquery.ScalarQueryParameter('limit', 'INT64', size),

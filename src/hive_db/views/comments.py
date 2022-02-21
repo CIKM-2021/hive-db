@@ -19,6 +19,8 @@ class CommentView(BaseResource):
         super().__init__()
         self.dataset = 'hive_zurich'
         self.table = settings.TABLES
+        self.first_block = settings.FIRST_BLOCK
+        self.end_block = settings.END_BLOCK
 
     def on_get(self, req, resp):
         # init client
@@ -43,7 +45,7 @@ class CommentView(BaseResource):
         if fields is not None:
             columns = fields
         else:
-            columns = '*'
+            columns = settings.SUPPORTED_FIELDS
         if size is None:
             size = 25
         if witnesses:
@@ -83,11 +85,11 @@ class CommentView(BaseResource):
                     UNNEST (transactions) AS transactions,
                     UNNEST (transactions.operations) AS operations
                 WHERE 
-                    _TABLE_SUFFIX BETWEEN '42000001_43245905_01' AND '59567347_59805327_48'
+                    _TABLE_SUFFIX BETWEEN {first_block} AND {end_block}
                     AND operations.value.title = ""
                     AND witness IN UNNEST(@witnesses)
                 LIMIT @limit
-            """.format(columns=columns, dataset=self.dataset, table=self.table)
+            """.format(columns=columns, dataset=self.dataset, table=self.table, first_block=self.first_block, end_block=self.end_block)
             job_config = bigquery.QueryJobConfig(
                 query_parameters=[
                     bigquery.ArrayQueryParameter("witnesses", "STRING", witnesses),
@@ -101,11 +103,11 @@ class CommentView(BaseResource):
                     UNNEST (transactions) AS transactions,
                     UNNEST (transactions.operations) AS operations
                 WHERE 
-                    _TABLE_SUFFIX BETWEEN '42000001_43245905_01' AND '59567347_59805327_48'
+                    _TABLE_SUFFIX BETWEEN {first_block} AND {end_block}
                     AND operations.value.title = ""
                     AND id IN UNNEST(@ids)
                 LIMIT @limit
-            """.format(columns=columns, dataset=self.dataset, table=self.table)
+            """.format(columns=columns, dataset=self.dataset, table=self.table, first_block=self.first_block, end_block=self.end_block)
             job_config = bigquery.QueryJobConfig(
                 query_parameters=[
                     bigquery.ArrayQueryParameter("ids", "INT64", ids),
@@ -119,11 +121,11 @@ class CommentView(BaseResource):
                     UNNEST (transactions) AS transactions,
                     UNNEST (transactions.operations) AS operations
                 WHERE 
-                    _TABLE_SUFFIX BETWEEN '42000001_43245905_01' AND '59567347_59805327_48'
+                    _TABLE_SUFFIX BETWEEN {first_block} AND {end_block}
                     AND operations.value.title = ""
                     AND id IN UNNEST(@block_ids)
                 LIMIT @limit
-            """.format(columns=columns, dataset=self.dataset, table=self.table)
+            """.format(columns=columns, dataset=self.dataset, table=self.table, first_block=self.first_block, end_block=self.end_block)
             job_config = bigquery.QueryJobConfig(
                 query_parameters=[
                     bigquery.ArrayQueryParameter("block_ids", "INT64", block_ids),
@@ -137,11 +139,11 @@ class CommentView(BaseResource):
                     UNNEST (transactions) AS transactions,
                     UNNEST (transactions.operations) AS operations
                 WHERE 
-                    _TABLE_SUFFIX BETWEEN '42000001_43245905_01' AND '59567347_59805327_48'
+                    _TABLE_SUFFIX BETWEEN {first_block} AND {end_block}
                     AND operations.value.title = ""
                     AND operations.value.author IN UNNEST(@authors)
                 LIMIT @limit
-            """.format(columns=columns, dataset=self.dataset, table=self.table)
+            """.format(columns=columns, dataset=self.dataset, table=self.table, first_block=self.first_block, end_block=self.end_block)
             job_config = bigquery.QueryJobConfig(
                 query_parameters=[
                     bigquery.ArrayQueryParameter("authors", "STRING", authors),
@@ -155,11 +157,11 @@ class CommentView(BaseResource):
                     UNNEST (transactions) AS transactions,
                     UNNEST (transactions.operations) AS operations
                 WHERE 
-                    _TABLE_SUFFIX BETWEEN '42000001_43245905_01' AND '59567347_59805327_48'
+                    _TABLE_SUFFIX BETWEEN {first_block} AND {end_block}
                     AND operations.value.title = ""
                     AND operations.value.permlink IN UNNEST(@permlinks)
                 LIMIT @limit
-            """.format(columns=columns, dataset=self.dataset, table=self.table)
+            """.format(columns=columns, dataset=self.dataset, table=self.table, first_block=self.first_block, end_block=self.end_block)
             job_config = bigquery.QueryJobConfig(
                 query_parameters=[
                     bigquery.ArrayQueryParameter("permlinks", "STRING", permlinks),
@@ -173,11 +175,11 @@ class CommentView(BaseResource):
                     UNNEST (transactions) AS transactions,
                     UNNEST (transactions.operations) AS operations
                 WHERE 
-                    _TABLE_SUFFIX BETWEEN '42000001_43245905_01' AND '59567347_59805327_48'
+                    _TABLE_SUFFIX BETWEEN {first_block} AND {end_block}
                     AND operations.value.title = ""
                     AND REGEXP_CONTAINS(operations.value.body, @words)
                 LIMIT @limit
-            """.format(columns=columns, dataset=self.dataset, table=self.table)
+            """.format(columns=columns, dataset=self.dataset, table=self.table, first_block=self.first_block, end_block=self.end_block)
             job_config = bigquery.QueryJobConfig(
                 query_parameters=[
                     bigquery.ScalarQueryParameter('words', 'STRING', search),
@@ -191,11 +193,11 @@ class CommentView(BaseResource):
                     UNNEST (transactions) AS transactions,
                     UNNEST (transactions.operations) AS operations
                 WHERE 
-                    _TABLE_SUFFIX BETWEEN '42000001_43245905_01' AND '59567347_59805327_48'
+                    _TABLE_SUFFIX BETWEEN {first_block} AND {end_block}
                     AND operations.value.title = "" 
                     AND operations.value.parent_permlink IN UNNEST(@post_permlinks)
                 LIMIT @limit
-            """.format(columns=columns, dataset=self.dataset, table=self.table)
+            """.format(columns=columns, dataset=self.dataset, table=self.table, first_block=self.first_block, end_block=self.end_block)
             job_config = bigquery.QueryJobConfig(
                 query_parameters=[
                     bigquery.ArrayQueryParameter("post_permlinks", "STRING", post_permlinks),
@@ -209,12 +211,12 @@ class CommentView(BaseResource):
                     UNNEST (transactions) AS transactions,
                     UNNEST (transactions.operations) AS operations
                 WHERE 
-                    _TABLE_SUFFIX BETWEEN '42000001_43245905_01' AND '59567347_59805327_48'
+                    _TABLE_SUFFIX BETWEEN {first_block} AND {end_block}
                     AND operations.value.title = ""
                     AND ARRAY_LENGTH(operations.value.json_metadata_dict.tags_list_str) = 0
                     AND operations.value.json_metadata_dict.tags_list_str[offset(0)] IN UNNEST(@tags)
                 LIMIT @limit
-            """.format(columns=columns, dataset=self.dataset, table=self.table)
+            """.format(columns=columns, dataset=self.dataset, table=self.table, first_block=self.first_block, end_block=self.end_block)
             job_config = bigquery.QueryJobConfig(
                 query_parameters=[
                     bigquery.ArrayQueryParameter("tags", "STRING", tags),
@@ -228,11 +230,11 @@ class CommentView(BaseResource):
                     UNNEST (transactions) AS transactions,
                     UNNEST (transactions.operations) AS operations
                 WHERE 
-                    _TABLE_SUFFIX BETWEEN '42000001_43245905_01' AND '59567347_59805327_48'
+                    _TABLE_SUFFIX BETWEEN {first_block} AND {end_block}
                     AND operations.value.title = ""
                     AND timestamp >= @after AND timestamp <= @before
                 LIMIT @limit
-            """.format(columns=columns, dataset=self.dataset, table=self.table)
+            """.format(columns=columns, dataset=self.dataset, table=self.table, first_block=self.first_block, end_block=self.end_block)
             job_config = bigquery.QueryJobConfig(
                 query_parameters=[
                     bigquery.ScalarQueryParameter("after", "TIMESTAMP", after),
@@ -247,10 +249,10 @@ class CommentView(BaseResource):
                     UNNEST (transactions) AS transactions,
                     UNNEST (transactions.operations) AS operations
                 WHERE 
-                    _TABLE_SUFFIX BETWEEN '42000001_43245905_01' AND '59567347_59805327_48'
+                    _TABLE_SUFFIX BETWEEN {first_block} AND {end_block}
                     AND operations.value.title = ""
                 LIMIT @limit
-            """.format(columns=columns, dataset=self.dataset, table=self.table)
+            """.format(columns=columns, dataset=self.dataset, table=self.table, first_block=self.first_block, end_block=self.end_block)
             job_config = bigquery.QueryJobConfig(
                 query_parameters=[
                     bigquery.ScalarQueryParameter('limit', 'INT64', size),
