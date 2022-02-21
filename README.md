@@ -9,7 +9,7 @@
 <p align="center">
     <a href="https://www.python.org/" target="blank_"><img alt="python" src="https://img.shields.io/badge/python-3.6.15-green" /></a>
     <a href="https://img.shields.io/badge/falcon-3.0.1-yellowgreen" target="blank_"><img alt="falcon" src="https://img.shields.io/badge/falcon-3.0.1-yellowgreen" /></a>
-    <a href="https://cloud.google.com/bigquery/" target="blank_"><img alt="bigquery" src="https://img.shields.io/badge/python-3.6.15-green" /></a>
+    <a href="https://cloud.google.com/bigquery/" target="blank_"><img alt="bigquery" src="https://img.shields.io/badge/google--cloud--bigquery-2.15.0-red" /></a>
     <a href="https://opensource.org/licenses/MIT" target="blank_"><img alt="mit" src="https://img.shields.io/badge/License-MIT-blue.svg" /></a>
     <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="blank_"><img alt="cc-by-sa" src="https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg" /></a>
 </p>
@@ -18,6 +18,7 @@
 ## Setup Environment
 
 - We provide public APIs via the endpoint *http://sochaindb.com*,  currently authenticated by the key *"TOKEN"* with the value *"WrrXP6szu06wlLQVfAM3b0FD8i4612zc"* in the Request Header.
+- Some requests might take a long period. If requests break down, let's try to set a high timeout.
 - The APIs could be requested by the [httpie tool](https://httpie.io/). Depending on your OS, you can quickly install this tool by a command line.
 
 On Linux:
@@ -32,9 +33,9 @@ On macOS:
 ## Parameters Usage
 
 - We will separate the APIs into three targets:
-  1. **Blocks**: get the blocks from the Hive blockchain, which gets all of the transactions of blocks.
-  2. **Posts**: get the posts we filtered from the transactions of the blocks.
-  3. **Comments**: get the comments we filtered from the transactions of the blocks.
+  1. **Posts**: get the posts we filtered from the transactions of the blocks.
+  2. **Comments**: get the comments we filtered from the transactions of the blocks.
+  3. **Blocks**: get the blocks from the Hive blockchain, which gets all of the transactions of blocks.
 
 - The current version APIs would serve data of Hive mainnet from **March 27th, 2020** to **December 6th, 2021**. The duration is after [Steem Hard Fork](https://www.coindesk.com/steem-hard-fork-hive).
 
@@ -58,49 +59,40 @@ On macOS:
 
 ## Examples of the API Calls
 
-### Block APIs
+
+### Post APIs
 
 
-GET: blocks with specific fields. You can get list of supported fields in this [list](https://github.com/SOCHAINDB/hive-db/blob/master/assets/fields.md).
+GET: posts by the authors
 ```
-http GET "sochaindb.com/hive-api/v1.0.0/blocks?size=3&fields=signing_key,transaction_ids,id,block_id,operations.value.author,operations.value.expiration,operations.value.parent_permlink,operations.value.body" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
-```
-
-GET: blocks by witnesses
-```
-http GET "sochaindb.com/hive-api/v1.0.0/blocks?size=5&fields=signing_key,transaction_ids,id,block_id,operations.value.author,operations.value.expiration,operations.value.parent_permlink,operations.value.body&witnesses=ausbitbank,pharesim,anyx" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
+http GET "sochaindb.com/hive-api/v1.0.0/posts?size=3&fields=signing_key,transaction_ids,id,block_id,operations.value.author,operations.value.expiration,operations.value.parent_permlink,operations.value.body&authors=wilhb81,pl-travelfeed" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
 ```
 
-GET: blocks by ids
+GET: posts contain words
 ```
-http GET "sochaindb.com/hive-api/v1.0.0/blocks?size=3&fields=signing_key,transaction_ids,id,block_id,operations.value.author,operations.value.expiration,operations.value.parent_permlink,operations.value.body&ids=51314015,51314016" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
-```
-
-GET: blocks by block_ids
-```
-http GET "sochaindb.com/hive-api/v1.0.0/blocks?size=3&fields=signing_key,transaction_ids,id,block_id,operations.value.author,operations.value.expiration,operations.value.parent_permlink,operations.value.body&block_ids=030efd5fe57e5fa7104b1186d7df6f00b39d3777,030efd60d0fbf6cca241f8be3577d3f680819c75" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
+http GET "sochaindb.com/hive-api/v1.0.0/posts?size=3&fields=signing_key,transaction_ids,id,block_id,operations.value.author,operations.value.expiration,operations.value.parent_permlink,operations.value.body&search=covid" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
 ```
 
-GET: blocks by operations
+GET: posts by permlink
 ```
-http GET "sochaindb.com/hive-api/v1.0.0/blocks?size=3&fields=signing_key,transaction_ids,id,block_id,operations.value.author,operations.value.expiration,operations.value.parent_permlink,operations.value.body&operations=comment_operation,comment_options_operation,vote_operation" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
-```
-
-**GET block by time can use both of UTC format and timestamp.**
-
-GET: blocks since begin_time to end_time
-```
-http GET "sochaindb.com/hive-api/v1.0.0/blocks?size=3&fields=signing_key,transaction_ids,id,block_id,operations.value.author,operations.value.expiration,operations.value.parent_permlink,operations.value.body&before=2021-02-14T04:40:15&after=2021-02-14T04:40:12" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
+http GET "sochaindb.com/hive-api/v1.0.0/posts?size=3&fields=signing_key,transaction_ids,id,block_id,operations.value.author,operations.value.expiration,operations.value.parent_permlink,operations.value.body&permlinks=covid-drove-us-into-digitization-and-crypto-or-freewrite-weekend-16-05-21,qoi4z2" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
 ```
 
-GET: blocks after a specific date
+**GET posts by time can use both of UTC format and timestamp.**
+
+GET: posts since begin_time to end_time
 ```
-http GET "sochaindb.com/hive-api/v1.0.0/blocks?size=3&fields=signing_key,transaction_ids,id,block_id,operations.value.author,operations.value.expiration,operations.value.parent_permlink,operations.value.body&after=2021-02-14T04:40:15" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
+http GET "sochaindb.com/hive-api/v1.0.0/posts?size=3&fields=signing_key,transaction_ids,id,block_id,operations.value.author,operations.value.expiration,operations.value.parent_permlink,operations.value.body&before=2021-05-24T04:40:15&after=2021-02-14T04:40:12" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
 ```
 
-GET: blocks before a specific date
+GET: posts after a specific date
 ```
-http GET "sochaindb.com/hive-api/v1.0.0/blocks?size=3&fields=signing_key,transaction_ids,id,block_id,operations.value.author,operations.value.expiration,operations.value.parent_permlink,operations.value.body&before=1620171391" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
+http GET "sochaindb.com/hive-api/v1.0.0/posts?size=3&fields=signing_key,transaction_ids,id,block_id,operations.value.author,operations.value.expiration,operations.value.parent_permlink,operations.value.body&after=2021-02-14T04:40:15" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
+```
+
+GET: posts before a specific date
+```
+http GET "sochaindb.com/hive-api/v1.0.0/posts?size=3&fields=signing_key,transaction_ids,id,block_id,operations.value.author,operations.value.expiration,operations.value.parent_permlink,operations.value.body&before=1620171391" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
 ```
 
 
@@ -144,40 +136,51 @@ GET: comments before a specific date
 http GET "sochaindb.com/hive-api/v1.0.0/comments?size=3&fields=signing_key,transaction_ids,id,block_id,operations.value.author,operations.value.expiration,operations.value.parent_permlink,operations.value.body&before=1620171391" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
 ```
 
-### Post APIs
+### Block APIs
 
 
-GET: posts by the authors
+GET: blocks with specific fields. You can get the list of supported fields in this [list](https://github.com/SOCHAINDB/hive-db/blob/master/assets/fields.md).
 ```
-http GET "sochaindb.com/hive-api/v1.0.0/posts?size=3&fields=signing_key,transaction_ids,id,block_id,operations.value.author,operations.value.expiration,operations.value.parent_permlink,operations.value.body&authors=wilhb81,pl-travelfeed" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
-```
-
-GET: posts contain words
-```
-http GET "sochaindb.com/hive-api/v1.0.0/posts?size=3&fields=signing_key,transaction_ids,id,block_id,operations.value.author,operations.value.expiration,operations.value.parent_permlink,operations.value.body&search=covid" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
+http GET "sochaindb.com/hive-api/v1.0.0/blocks?size=3&fields=signing_key,transaction_ids,id,block_id,operations.value.author,operations.value.expiration,operations.value.parent_permlink,operations.value.body" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
 ```
 
-GET: posts by permlink
+GET: blocks by witnesses
 ```
-http GET "sochaindb.com/hive-api/v1.0.0/posts?size=3&fields=signing_key,transaction_ids,id,block_id,operations.value.author,operations.value.expiration,operations.value.parent_permlink,operations.value.body&permlinks=covid-drove-us-into-digitization-and-crypto-or-freewrite-weekend-16-05-21,qoi4z2" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
-```
-
-**GET posts by time can use both of UTC format and timestamp.**
-
-GET: posts since begin_time to end_time
-```
-http GET "sochaindb.com/hive-api/v1.0.0/posts?size=3&fields=signing_key,transaction_ids,id,block_id,operations.value.author,operations.value.expiration,operations.value.parent_permlink,operations.value.body&before=2021-05-24T04:40:15&after=2021-02-14T04:40:12" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
+http GET "sochaindb.com/hive-api/v1.0.0/blocks?size=5&fields=signing_key,transaction_ids,id,block_id,operations.value.author,operations.value.expiration,operations.value.parent_permlink,operations.value.body&witnesses=ausbitbank,pharesim,anyx" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
 ```
 
-GET: posts after a specific date
+GET: blocks by ids
 ```
-http GET "sochaindb.com/hive-api/v1.0.0/posts?size=3&fields=signing_key,transaction_ids,id,block_id,operations.value.author,operations.value.expiration,operations.value.parent_permlink,operations.value.body&after=2021-02-14T04:40:15" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
+http GET "sochaindb.com/hive-api/v1.0.0/blocks?size=3&fields=signing_key,transaction_ids,id,block_id,operations.value.author,operations.value.expiration,operations.value.parent_permlink,operations.value.body&ids=51314015,51314016" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
 ```
 
-GET: posts before a specific date
+GET: blocks by block_ids
 ```
-http GET "sochaindb.com/hive-api/v1.0.0/posts?size=3&fields=signing_key,transaction_ids,id,block_id,operations.value.author,operations.value.expiration,operations.value.parent_permlink,operations.value.body&before=1620171391" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
+http GET "sochaindb.com/hive-api/v1.0.0/blocks?size=3&fields=signing_key,transaction_ids,id,block_id,operations.value.author,operations.value.expiration,operations.value.parent_permlink,operations.value.body&block_ids=030efd5fe57e5fa7104b1186d7df6f00b39d3777,030efd60d0fbf6cca241f8be3577d3f680819c75" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
 ```
+
+GET: blocks by operations
+```
+http GET "sochaindb.com/hive-api/v1.0.0/blocks?size=3&fields=signing_key,transaction_ids,id,block_id,operations.value.author,operations.value.expiration,operations.value.parent_permlink,operations.value.body&operations=comment_operation,comment_options_operation,vote_operation" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
+```
+
+**GET block by time can use both of UTC format and timestamp.**
+
+GET: blocks since begin_time to end_time
+```
+http GET "sochaindb.com/hive-api/v1.0.0/blocks?size=3&fields=signing_key,transaction_ids,id,block_id,operations.value.author,operations.value.expiration,operations.value.parent_permlink,operations.value.body&before=2021-02-14T04:40:15&after=2021-02-14T04:40:12" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
+```
+
+GET: blocks after a specific date
+```
+http GET "sochaindb.com/hive-api/v1.0.0/blocks?size=3&fields=signing_key,transaction_ids,id,block_id,operations.value.author,operations.value.expiration,operations.value.parent_permlink,operations.value.body&after=2021-02-14T04:40:15" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
+```
+
+GET: blocks before a specific date
+```
+http GET "sochaindb.com/hive-api/v1.0.0/blocks?size=3&fields=signing_key,transaction_ids,id,block_id,operations.value.author,operations.value.expiration,operations.value.parent_permlink,operations.value.body&before=1620171391" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
+```
+
 
 ### Statistics APIs
 
@@ -198,10 +201,12 @@ GET: the list of contents of top posts.
 http GET "sochaindb.com/hive-api/v1.0.0/top_words?size=1000" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
 ```
 
+
 ## Appendix
 
-- You can get operation types from this [list](https://github.com/SOCHAINDB/hive-db/blob/master/assets/summary.org#operation-types).
-- [List of supported fields](https://github.com/SOCHAINDB/hive-db/blob/master/assets/fields.md).
+- You can get the list of supported fields of the APIs [here](https://github.com/SOCHAINDB/hive-db/blob/master/assets/fields.md).
+- You can get the list of operation types of the APIs [here](https://github.com/CIKM-2021/hive-db/blob/master/assets/summary.org).
+- You can see the bigquery SQL examples [here](https://github.com/SOCHAINDB/hive-db/blob/master/assets/queries.md).
 
 
 # Run a local service
