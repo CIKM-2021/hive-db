@@ -2,6 +2,40 @@
 
 ## Social media Queries
 
+### Amount of active users per month
+``` sql
+WITH
+  first_account_transactions AS (
+  SELECT
+    IFNULL(o.value.required_auths[SAFE_OFFSET(0)],
+      o.value.required_posting_auths[SAFE_OFFSET(0)]) AS account_name,
+    MIN(timestamp) AS transaction_time
+  FROM
+    `steemit-307308.hive_zurich.block_data_*`
+  CROSS JOIN
+    UNNEST(transactions) AS t
+  CROSS JOIN
+    UNNEST(t.operations) AS o
+  GROUP BY
+    account_name),
+  transacting_counts AS (
+  SELECT
+    DATE_TRUNC(transaction_time, MONTH) AS month,
+    COUNT(account_name) AS new_first_transacting
+  FROM
+    first_account_transactions
+  GROUP BY
+    month)
+SELECT
+  month,
+  new_first_transacting,
+  SUM(new_first_transacting) OVER (ORDER BY month ASC) AS new_transacting_count
+FROM
+  transacting_counts
+ORDER BY
+  month ASC
+```
+
 ### Amount of users created per month
 
 ``` sql
