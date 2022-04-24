@@ -2,7 +2,7 @@
 
 ## Social media Queries
 
-### Amount of active users per month
+### Growth of active users per month
 ``` sql
 WITH
   first_account_transactions AS (
