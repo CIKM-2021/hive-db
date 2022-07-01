@@ -201,6 +201,32 @@ GET: the list of contents of top posts.
 http GET "sochaindb.com/hive-api/v1.0.0/top_words?size=1000" TOKEN:WrrXP6szu06wlLQVfAM3b0FD8i4612zc --timeout 540
 ```
 
+# Query public dataset on Bigquery console
+
+- Sochaindb was published on Bigquery console. You can query directly from your google cloud service account following the steps below.
+- Noted that you need to had a billing medthod in your google cloud service account for payment follow [BigQuery pricing](https://cloud.google.com/bigquery/pricing).
+
+## Search sochaindb public dataset
+![](./assets/pin_project.png)
+- You might access to **ADD DATA** -> **Pin a project** -> **Enter project name**
+- Type `steemit-307308` and pin it to menu.
+![](./assets/dataset_name.png)
+
+## Glance the dataset
+- Now you can see `hive_zurich` dataset (because the dataset locate in Zurich) in `steemit-307308` project.
+![](./assets/blocks.png)
+- The dataset included many tables call blocks in our dataset. You would see the table schema of each block when clicked on.
+![](./assets/schema.png)
+- The next tab is the detail of this block.
+![](./assets/detail.png)
+- If you want to take a look at the data, you can click on the preview tab to see the 50 first records of the block.
+![](./assets/preview.png)
+
+## Make queries
+- Then you can make your own queries. We provided some examples used in our paper [here](./assets/queries.md).
+- Prior to execute your query, you should check out the dry run result of your query first to avoid a unexpected receipt.
+![](./assets/query.png)
+
 
 ## Appendix
 
