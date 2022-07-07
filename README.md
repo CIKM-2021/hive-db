@@ -37,7 +37,7 @@ On macOS:
   2. **Comments**: get the comments we filtered from the transactions of the blocks.
   3. **Blocks**: get the blocks from the Hive blockchain, which gets all of the transactions of blocks.
 
-- The current version APIs would serve data of Hive mainnet from **March 27th, 2020** to **January 31st, 2022**. The duration is after [Steem Hard Fork](https://www.coindesk.com/steem-hard-fork-hive).
+- The current version APIs would serve data of Hive mainnet from **March 27th, 2020** to [latest date] . The duration is after [Steem Hard Fork](https://www.coindesk.com/steem-hard-fork-hive).
 
 - The following parameters in bellow table will help the request be more specific.
 
@@ -267,3 +267,4 @@ The dataset is licensed under the
 [cc-by-sa-image]: https://licensebuttons.net/l/by-sa/4.0/88x31.png
 [cc-by-sa-shield]: https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg
 
+[latest date]: July 4th, 202
