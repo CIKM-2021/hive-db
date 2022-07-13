@@ -14,7 +14,23 @@
     <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="blank_"><img alt="cc-by-sa" src="https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg" /></a>
 </p>
 
-# HIVE Data service
+# SoChainDB - HIVE Data service
+## Description
+We propose the SoChainDB framework that facilitates obtaining data from blockchain-powered social networks since accessing and collecting data from these social networks is not easy. It often requires in-depth blockchain knowledge, which is not the focus of computer science and social science researchers. To show the capacity and strength of SoChainDB, we crawl and publish Hive data - one of the largest blockchain-based social networks. We conduct extensive analyses to understand the insight of Hive data and discuss exciting applications, e.g., blockchain games extracted from the decentralized network by SoChainDB. Besides, the rich and valuable data from decentralized social networks also opens up several new directions for the research community to advance knowledge about human behavior. SoChainDB is publicly accessible at http://sochaindb.com, and the dataset is available under the CC BY-SA 4.0 license.
+
+## Citation
+Hoang H. Nguyen, Dmytro Bozhkov, Zahra Ahmadi, Nhat-Minh Nguyen, and Thanh-Nam Doan. 2022. *SoChainDB: A Database for Storing and Retrieving Blockchain-Powered Social Network Data.* In Proceedings of the 45th International ACM SIGIR Conference on Research and Development in Information Retrieval (SIGIR '22). Association for Computing Machinery, New York, NY, USA, 3036–3045. https://doi.org/10.1145/3477495.3531735
+
+```
+@inproceedings{nguyen2022sochaindb,
+  title={SoChainDB: A Database for Storing and Retrieving Blockchain-Powered Social Network Data},
+  author={Nguyen, Hoang H and Bozhkov, Dmytro and Ahmadi, Zahra and Nguyen, Nhat-Minh and Doan, Thanh-Nam},
+  booktitle={Proceedings of the 45th International ACM SIGIR Conference on Research and Development in Information Retrieval},
+  pages={3036--3045},
+  year={2022}
+}
+```
+
 ## Setup Environment
 
 - We provide public APIs via the endpoint *http://sochaindb.com*,  currently authenticated by the key *"TOKEN"* with the value *"WrrXP6szu06wlLQVfAM3b0FD8i4612zc"* in the Request Header.
