@@ -219,8 +219,8 @@ http GET "sochaindb.com/hive-api/v1.0.0/top_words?size=1000" TOKEN:WrrXP6szu06wl
 
 # Query public dataset on Bigquery console
 
-- Sochaindb was published on Bigquery console. You can query directly from your google cloud service account following the steps below.
-- Noted that you need to had a billing medthod in your google cloud service account for payment follow [BigQuery pricing](https://cloud.google.com/bigquery/pricing).
+- SochainDB was publicized on the Bigquery console. You can query directly from your google cloud service account following the steps below.
+- Noted that you need to have a billing method in your google cloud service account for payment follow [BigQuery pricing](https://cloud.google.com/bigquery/pricing).
 
 ## Search sochaindb public dataset
 ![](./assets/pin_project.png)
